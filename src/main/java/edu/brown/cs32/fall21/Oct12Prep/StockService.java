@@ -8,10 +8,11 @@ interface StockCallback {
     void notifyCustomer(int stockID, double newPrice);
 }
 
-public class StockService {
+public class StockService implements Runnable {
     Map<Integer, List<StockCallback>> subscriptions = new HashMap<>();
 
     void subscribe(int stockID, StockCallback cb) {
+        System.out.println("StockService subscribe");
         if(!subscriptions.containsKey(stockID))
             subscriptions.put(stockID, new ArrayList<>());
         subscriptions.get(stockID).add(cb);
@@ -19,6 +20,11 @@ public class StockService {
 
     void serve() {
         while(true) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                return;
+            }
             int stock = (new Double(Math.random() * 10)).intValue();
             DecimalFormat dec2 = new DecimalFormat("###.##");
             double price = Double.parseDouble(dec2.format(Math.random() * 100));
@@ -29,5 +35,10 @@ public class StockService {
                 }
             }
         }
+    }
+
+    @Override
+    public void run() {
+        serve();
     }
 }
