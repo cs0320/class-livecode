@@ -5,7 +5,7 @@ import java.util.*;
 
 // Package-public is OK for this context (1 class meeting per package)
 interface StockCallback {
-    void notifyCustomer(int stockID, double oldPrice, double newPrice);
+    void notifyCustomer(int stockID, double newPrice);
 }
 
 public class StockService {
@@ -25,7 +25,7 @@ public class StockService {
 
             if(subscriptions.containsKey(stock)) {
                 for(StockCallback cb : subscriptions.get(stock)) {
-                    cb.notifyCustomer(stock, 0, price);
+                    cb.notifyCustomer(stock, price);
                 }
             }
         }

@@ -1,8 +1,13 @@
 package edu.brown.cs32.fall21.Oct12;
 
+/**
+ * We will ignore this class today; I'm keeping it around
+ * for reference only!
+ */
+
 class InvestmentAppCallback implements StockCallback {
     @Override
-    public void notifyCustomer(int stockID, double oldPrice, double newPrice) {
+    public void notifyCustomer(int stockID, double newPrice) {
         System.out.println("The price of Stk" + stockID + " changed to $" + newPrice);
     }
 }
