@@ -9,6 +9,8 @@ import edu.brown.cs.student.searchAlgorithms.ListNaiveSearch;
 import edu.brown.cs.student.stars.Star;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -16,7 +18,7 @@ public class Nov02 {
 
     // Convenient way to generate random doubles within a range
     private static final ThreadLocalRandom tlr = ThreadLocalRandom.current();
-    private static final int NUM_TRIALS = 1000;
+    private static final int NUM_TRIALS = 10000;
 
     public static void main(String[] args) {
         // FUZZ TEST
@@ -29,8 +31,8 @@ public class Nov02 {
             // FUZZ TEST: kd-tree nearest-neighbor and radius
             Star target = generateRandomStar(-1);
             KdTreeSearch<Integer> search1 = new KdTreeSearch<>();
-            List<Coordinate<Integer>> kdnn = search1.getNearestNeighborsResult(5, target, t.getRoot(), false);
-            List<Coordinate<Integer>> kdr = search1.getRadiusSearchResult(1.0, target, t.getRoot(), false);
+            List<Coordinate<Integer>> kdnn = search1.getNearestNeighborsResult(3, target, t.getRoot(), false);
+            List<Coordinate<Integer>> kdr = search1.getRadiusSearchResult(3.0, target, t.getRoot(), false);
 
             List<KeyDistance<Integer>> dists = new ArrayList<>();
             for(int i = 0 ; i<constellation.size();i++) {
@@ -44,8 +46,39 @@ public class Nov02 {
             }
             // FUZZ TEST: naive list-based nearest neighbor
             ListNaiveSearch<Integer> search2 = new ListNaiveSearch<>(dists);
-            List<Integer> naivenn = search2.getNaiveNearestNeighbors(5);
-            List<Integer> naiver = search2.getNaiveRadiusSearchResult(5);
+            List<Integer> naivenn = search2.getNaiveNearestNeighbors(3);
+            List<Integer> naiver = search2.getNaiveRadiusSearchResult(3);
+
+            ///////////
+            // " naivenn = kdnn"
+            // " naiver = kdr"
+            // The two data structures use a different abstraction;
+            //   convert between them
+            List<Coordinate<Integer>> naiver_real = new ArrayList<>();
+            for(Integer i : naiver) {
+                naiver_real.add(constellation.get(i));
+            }
+            List<Coordinate<Integer>> naivenn_real = new ArrayList<>();
+            for(Integer i : naivenn) {
+                naivenn_real.add(constellation.get(i));
+            }
+
+            System.out.println("----- MBT -----");
+            if(!naiver_real.equals(kdr)) {
+                System.out.println(kdr + " vs " + naiver_real);
+                System.exit(1);
+            }
+
+            if(!(new HashSet<>(naivenn_real)).equals(new HashSet<>(kdnn))) {
+
+                System.out.println(kdnn);
+                System.out.println(naivenn_real);
+                System.exit(1);
+            }
+
+
+            ///////////
+
 
             if(trial % 100 == 0) {
                 System.out.println("visibility: trial "+trial+"; generated: "+t);
@@ -55,7 +88,7 @@ public class Nov02 {
 
     private static List<Coordinate<Integer>> generateRandomConstellation() {
         List<Coordinate<Integer>> contents = new ArrayList<>();
-        for(int i=0;i<100;i++) {
+        for(int i=0;i<5;i++) {
             Star star = generateRandomStar(i);
             contents.add(star);
         }
