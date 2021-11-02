@@ -1,0 +1,5 @@
+INPUT
+stars data/stars/empty-lines.csv
+OUTPUT
+ERROR: Missing columns in csv
+END

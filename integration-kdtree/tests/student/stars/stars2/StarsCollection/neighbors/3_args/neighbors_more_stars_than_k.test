@@ -1,0 +1,8 @@
+INPUT
+stars data/stars/stardata.csv
+neighbors 2 "Sol"
+OUTPUT
+Read 119617 stars from data/stars/stardata.csv
+70667
+71454
+END

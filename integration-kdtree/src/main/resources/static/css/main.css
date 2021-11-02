@@ -1,0 +1,75 @@
+html {
+  font-family: Segoe UI,Frutiger,Frutiger Linotype,Dejavu Sans,Helvetica Neue,Arial,sans-serif;
+  color: silver;
+}
+
+body {
+  background-color: black;
+}
+
+.center {
+  text-align: center;
+}
+
+button, input, select, textarea, form, h3 {
+  color: black;
+  font-family: Segoe UI,Frutiger,Frutiger Linotype,Dejavu Sans,Helvetica Neue,Arial,sans-serif;
+}
+
+h2 {
+  color: #ff0000;
+}
+
+textarea, text {
+  color: silver;
+}
+
+h1 {
+  color: silver;
+  text-align: center;
+}
+
+
+#text {
+  color: silver;
+}
+
+#errorDiv {
+  text-align: center;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#chooseFileDiv, #musicReminisceDiv {
+  border-radius: 5px;
+  background-color: rgba(208, 208, 208, 0.5);
+  padding: 20px;
+  width: 500px;
+}
+
+#starsInputDiv {
+  border-radius: 5px;
+  background-color: rgba(208, 208, 208, 0.5);
+  padding: 20px;
+  width: 500px;
+}
+
+#argsDiv {
+  border-radius: 5px;
+  background-color: rgba(255,255,255, 0.5);
+  padding: 20px;
+  width: 460px;
+}
+
+#flexContainerDiv {
+  display:flex;
+  flex-direction:row;
+  justify-content: space-evenly;
+}
+
+body{
+  background-image: url('https://nerdist.com/wp-content/uploads/2019/09/black-hole-GIF.gif');
+  background-size: 2000px;
+  background-repeat:no-repeat;
+  background-position: center center;
+}

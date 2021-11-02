@@ -1,0 +1,6 @@
+INPUT
+stars data/stars/three-star.csv
+radius 0 "Star One"
+OUTPUT
+Read 3 stars from data/stars/three-star.csv
+END

@@ -1,0 +1,7 @@
+INPUT
+stars data/stars/one-star.csv
+naive_radius 100 2 13 3
+OUTPUT
+Read 1 stars from data/stars/one-star.csv
+1
+END

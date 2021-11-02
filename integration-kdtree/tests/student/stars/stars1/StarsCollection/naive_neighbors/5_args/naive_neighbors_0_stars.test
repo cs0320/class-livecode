@@ -1,0 +1,6 @@
+INPUT
+stars data/stars/no-star.csv
+naive_neighbors 1 10 12 13
+OUTPUT
+Read 0 stars from data/stars/no-star.csv
+END

@@ -1,0 +1,5 @@
+INPUT
+stars data/stars/stardata.csv yo
+OUTPUT
+ERROR: Invalid no.of arguments passed for stars
+END

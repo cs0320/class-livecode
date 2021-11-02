@@ -1,0 +1,5 @@
+INPUT
+mock data/mock-data/invalid-header-6.csv
+OUTPUT
+ERROR: File does not contain header/invalid header found
+END

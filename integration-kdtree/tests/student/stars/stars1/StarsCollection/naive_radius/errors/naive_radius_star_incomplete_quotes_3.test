@@ -1,0 +1,7 @@
+INPUT
+stars data/stars/stardata.csv
+naive_radius 1 "So"l"
+OUTPUT
+Read 119617 stars from data/stars/stardata.csv
+ERROR:  Invalid no.of arguments passed for naive_neighbors
+END

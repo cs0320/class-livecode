@@ -1,0 +1,7 @@
+INPUT
+stars data/stars/stardata.csv
+radius 1 "sol"
+OUTPUT
+Read 119617 stars from data/stars/stardata.csv
+ERROR: Star name not found in loaded csv
+END

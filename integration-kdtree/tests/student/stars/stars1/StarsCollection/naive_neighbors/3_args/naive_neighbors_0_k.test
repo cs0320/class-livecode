@@ -1,0 +1,6 @@
+INPUT
+stars data/stars/tie-star.csv
+naive_neighbors 0 "Colton"
+OUTPUT
+Read 10 stars from data/stars/tie-star.csv
+END

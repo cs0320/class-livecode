@@ -1,0 +1,7 @@
+INPUT
+stars data/stars/stardata.csv
+naive_radius 1 ""
+OUTPUT
+Read 119617 stars from data/stars/stardata.csv
+ERROR: Star name cannot be empty
+END

@@ -1,0 +1,6 @@
+INPUT
+stars data/stars/no-star.csv
+naive_radius 1 0 3 95.3
+OUTPUT
+Read 0 stars from data/stars/no-star.csv
+END

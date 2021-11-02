@@ -1,0 +1,5 @@
+INPUT
+stars data/stars/non-int-id.csv
+OUTPUT
+ERROR: Star ID must be a non-negative integer
+END
