@@ -11,6 +11,7 @@ public class Nov04 {
                 "Not what he was, but what he should have been.");
         Animal boatswain = new Dog("Boatswain", true, false);
         byron.addFriend(boatswain);
+        boatswain.addFriend(byron);
 
         System.out.println(boatswain.speak());
         System.out.println(byron.speak());
