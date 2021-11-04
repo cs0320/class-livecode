@@ -14,6 +14,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * You will need to mark integration-kdtree/src as a sources root (right click menu)
+ */
+
 public class Nov02 {
 
     // Convenient way to generate random doubles within a range
