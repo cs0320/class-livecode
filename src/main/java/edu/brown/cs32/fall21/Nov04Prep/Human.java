@@ -14,4 +14,10 @@ public class Human extends Animal {
     public String speak() {
         return poem;
     }
+
+    // Ignore this until attempt 3
+    @Override
+    public <R> R accept(AnimalVisitor<R> visitor) {
+        return visitor.visit(this); // we add this to every Animal class
+    }
 }

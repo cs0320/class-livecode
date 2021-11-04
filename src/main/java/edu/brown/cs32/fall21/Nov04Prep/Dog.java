@@ -16,4 +16,9 @@ public class Dog extends Animal {
     public String speak() {
         return "woof!";
     }
+
+    @Override
+    public <R> R accept(AnimalVisitor<R> visitor) {
+        return visitor.visit(this); // we add this to every Animal class
+    }
 }

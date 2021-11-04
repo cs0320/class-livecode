@@ -24,4 +24,9 @@ public abstract class Animal implements Talkative {
         friends.add(friend);
         return true;
     }
+
+    ////////////////////////////////////////////////////////
+    // Ignore this until attempt 3
+    // (Yes, this could also be in an interface that Animal implements)
+    abstract public <R> R accept(AnimalVisitor<R> visitor);
 }
