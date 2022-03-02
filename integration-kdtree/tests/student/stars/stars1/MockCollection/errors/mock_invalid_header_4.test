@@ -1,5 +1,0 @@
-INPUT
-mock data/mock-data/invalid-header-4.csv
-OUTPUT
-ERROR: File does not contain header/invalid header found
-END

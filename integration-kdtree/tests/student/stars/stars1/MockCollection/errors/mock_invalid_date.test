@@ -1,5 +1,0 @@
-INPUT
-mock data/mock-data/invalid-date-data.csv
-OUTPUT
-ERROR: Invalid date in data
-END

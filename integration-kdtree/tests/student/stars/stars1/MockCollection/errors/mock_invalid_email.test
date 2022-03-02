@@ -1,5 +1,0 @@
-INPUT
-mock data/mock-data/invalid-email-data.csv
-OUTPUT
-ERROR: Invalid email in data
-END

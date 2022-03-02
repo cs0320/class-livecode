@@ -1,5 +1,0 @@
-INPUT
-mock data/mock-data/mock-data.csv hibi
-OUTPUT
-ERROR: Invalid no.of arguments passed for mock
-END

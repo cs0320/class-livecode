@@ -1,7 +1,0 @@
-INPUT
-stars data/stars/three-star.csv
-naive_radius 1 "Star One"
-OUTPUT
-Read 3 stars from data/stars/three-star.csv
-2
-END

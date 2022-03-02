@@ -1,6 +1,0 @@
-INPUT
-stars data/stars/tie-star.csv
-naive_neighbors 0 1 1 1
-OUTPUT
-Read 10 stars from data/stars/tie-star.csv
-END

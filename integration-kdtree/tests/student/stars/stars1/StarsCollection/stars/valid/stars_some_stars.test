@@ -1,5 +1,0 @@
-INPUT
-stars data/stars/tie-star.csv
-OUTPUT
-Read 10 stars from data/stars/tie-star.csv
-END

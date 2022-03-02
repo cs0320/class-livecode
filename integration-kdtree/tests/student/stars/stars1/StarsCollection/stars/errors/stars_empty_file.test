@@ -1,5 +1,0 @@
-INPUT
-stars data/stars/empty.csv
-OUTPUT
-ERROR: File does not contain header/invalid header found
-END

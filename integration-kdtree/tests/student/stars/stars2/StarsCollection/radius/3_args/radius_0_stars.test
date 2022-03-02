@@ -1,7 +1,0 @@
-INPUT
-stars data/stars/no-star.csv
-radius 1 "Sol"
-OUTPUT
-Read 0 stars from data/stars/no-star.csv
-ERROR: Star name not found in loaded csv
-END

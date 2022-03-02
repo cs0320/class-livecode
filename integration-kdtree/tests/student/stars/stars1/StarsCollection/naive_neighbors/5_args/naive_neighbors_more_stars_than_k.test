@@ -1,8 +1,0 @@
-INPUT
-stars data/stars/stardata.csv
-naive_neighbors 2 10.12222 33 2
-OUTPUT
-Read 119617 stars from data/stars/stardata.csv
-118341
-22866
-END
