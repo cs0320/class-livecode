@@ -1,4 +1,4 @@
-package edu.brown.cs32.livecode.mar08;
+package edu.brown.cs32.spring22.livecode.mar08;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -13,7 +13,7 @@ public class GenericsExercise1 {
         // Bounded wildcard: any subtype of Number
         Collection<? extends Number> someNums2 = new HashSet<>();
         // Which of these will be OK?
-        someNums2.add(1);       // ?
+        //someNums2.add(1);       // ?
         //someNums2.add(1.5);     // ?
         someNums2.add(null);    // ?
         someNums2 = someNums;   // ?

@@ -1,7 +1,4 @@
-package edu.brown.cs32.livecode.feb17;
-
-import java.util.ArrayList;
-import java.util.Collection;
+package edu.brown.cs32.spring22.livecode.feb15;
 
 class Student {
     final String name;
@@ -9,7 +6,6 @@ class Student {
         this.name = name;
     }
 }
-
 class TA {
     final String name;
 
@@ -23,9 +19,4 @@ class TA {
 
 
 public class Main {
-    public static void main(String[] args) {
-        HoursDispatcher disp = new HoursDispatcher(new ArrayList<Student>().iterator(), "Test");
-        //Collection<String> view = disp.getOnDutyTAsView();
-
-    }
 }

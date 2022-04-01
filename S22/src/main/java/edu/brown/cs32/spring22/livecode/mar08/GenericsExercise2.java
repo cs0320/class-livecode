@@ -1,4 +1,4 @@
-package edu.brown.cs32.livecode.mar08;
+package edu.brown.cs32.spring22.livecode.mar08;
 
 import java.util.*;
 
@@ -55,7 +55,7 @@ class Stack<E> {
         stack.pushAll(nums);
         stack.pushAll(ints);
         stack.popAll(nums);
-        stack.popAll(ints);
+        //stack.popAll(ints);
 
 
     }
