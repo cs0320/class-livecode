@@ -10,29 +10,51 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.time.Duration;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         // There will be various messages in the console...
         //   (By default, Selenium prints a lot of info)
         WebDriverManager.firefoxdriver().setup();
+
+        runExample("https://tnelson.github.io/reactNYT/");
+        runExample("file:///Users/tim/repos/reactNYT/vanilla-app/index.html");
+    }
+
+    static void runExample(String path) {
         FirefoxOptions options = new FirefoxOptions();
         FirefoxDriver driver = new FirefoxDriver(options);
-        driver.get("https://tnelson.github.io/reactNYT/");
-
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
+        
+        driver.get(path);
         System.out.println(driver.getTitle());
-        // Uh oh, Tim didn't give a better title to the app...
-        // (what would have happened if the page hadn't finished loading?)
 
-        //WebElement new_round = driver.findElement(By.name("new-round"));
-        // org.openqa.selenium.NoSuchElementException: Unable to locate element: *[name='new-round']
-        // lots of ways to "get an element"; we really meant CLASS name
-
+        // lots of ways to "get an element":
         WebElement new_round = driver.findElement(By.className("new-round"));
         System.out.println(new_round);
 
-        // Timeouts are subtle; in simple examples we can do this:
-        //driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
+        // Don't get _all_ inputs, just the inputs in the new-round div
+        List<WebElement> inputs = new_round.findElements(By.tagName("input"));
+        WebElement submit = new_round.findElement(By.tagName("button"));
+
+        System.out.println(inputs);
+        int val = 1;
+        for(WebElement in : inputs) {
+            in.sendKeys(String.valueOf(val));
+            val++;
+        }
+        submit.click();
+
+        // Beware: what happens if we re-use the same WebElement values?
+        for(WebElement in : inputs) {
+            in.sendKeys(String.valueOf(val));
+            val++;
+        }
+        submit.click();
+        // We're actually OK! But this isn't guaranteed.
+        // Selenium uses locators to define where elements live;
+        // these can become stale, etc.
 
         driver.quit();
     }
