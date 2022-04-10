@@ -19,7 +19,8 @@ public class Main {
         WebDriverManager.firefoxdriver().setup();
 
         runExample("https://tnelson.github.io/reactNYT/");
-        runExample("file:///Users/tim/repos/reactNYT/vanilla-app/index.html");
+        // Remember to CHANGE THIS if you want to run vs. a local file
+        //   runExample("file:///Users/tim/repos/reactNYT/vanilla-app/index.html");
     }
 
     static void runExample(String path) {
