@@ -1,14 +1,9 @@
 name: JavaCI
 
-# By default, this will run on Ubuntu Linux (ubuntu-latest)
-# To change to (e.g.) MacOS:
-# runs-on: macos-latest
-
 on:
   push:
     branches:
     - main
-
 
 jobs:
   build:
