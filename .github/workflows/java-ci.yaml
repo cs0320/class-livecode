@@ -1,4 +1,4 @@
-name: Java CI
+name: JavaCI
 
 # By default, this will run on Ubuntu Linux (ubuntu-latest)
 # To change to (e.g.) MacOS:

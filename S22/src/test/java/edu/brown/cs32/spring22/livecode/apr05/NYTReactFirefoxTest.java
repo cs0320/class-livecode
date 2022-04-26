@@ -25,6 +25,8 @@ public class NYTReactFirefoxTest {
         WebDriverManager.firefoxdriver().setup();
 
         FirefoxOptions options = new FirefoxOptions();
+        // Headless = no UI displayed; good for CI
+        options.addArguments("--headless");
         this.driver = new FirefoxDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
     }
