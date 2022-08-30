@@ -1,0 +1,7 @@
+.correct-guess {
+    background-color: green;
+}
+
+.incorrect-guess {
+    background-color: red;
+}
