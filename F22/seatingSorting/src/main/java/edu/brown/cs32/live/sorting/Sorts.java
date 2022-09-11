@@ -25,9 +25,8 @@ public class Sorts {
         for(int ii=0;ii<lst.size();ii++) {
             for(int jj=ii+1; jj<lst.size();jj++) {
                 if(howToCompare.compare(lst.get(ii), lst.get(jj)) < 0) {
-                    T temp = lst.get(ii);
                     lst.set(ii, lst.get(jj));
-                    lst.set(jj, temp);
+                    lst.set(jj, lst.get(ii));
                 }
             }
         }
