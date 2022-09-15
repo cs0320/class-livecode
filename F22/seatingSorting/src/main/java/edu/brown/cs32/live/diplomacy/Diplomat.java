@@ -14,7 +14,8 @@ public record Diplomat(RANK rank, String name) {
      */
     public enum RANK {
         NUNCIO, AMBASSADOR, HIGH_COMMISSIONER,
-        MINISTER, ENVOY, CHARGE_DAFFAIRES
+        MINISTER, ENVOY,
+        CHARGE_DAFFAIRES
     }
 
 }

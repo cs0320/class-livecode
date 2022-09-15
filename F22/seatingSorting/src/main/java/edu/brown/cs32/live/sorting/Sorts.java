@@ -22,8 +22,10 @@ public class Sorts {
      */
     public static <T> void bubbleSort(List<T> lst, Comparator<T> howToCompare) {
         // Flashback to 1990's Java!
+        System.out.println(lst);
         for(int ii=0;ii<lst.size();ii++) {
             for(int jj=ii+1; jj<lst.size();jj++) {
+
                 if(howToCompare.compare(lst.get(ii), lst.get(jj)) < 0) {
                     lst.set(ii, lst.get(jj));
                     lst.set(jj, lst.get(ii));
