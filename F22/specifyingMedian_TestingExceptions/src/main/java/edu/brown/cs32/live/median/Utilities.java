@@ -52,7 +52,7 @@ public class Utilities {
 //        } else {
 //            // even number of elements: take the average of middle 2 elements
 //            // TODO: is this always a safe operation? (hidden 3rd problem!)
-//            result = (asList.get(asList.size()/2) + asList.get(asList.size()/2 + 1)) / 2;
+//            result = (asList.get(asList.size()/2) + asList.get(asList.size()/2 - 1)) / 2;
 //        }
 //        return result;
 //    }
@@ -91,7 +91,7 @@ public class Utilities {
 //            result = asList.get(asList.size()/2);
 //        } else {
 //            // even number of elements: take the average of middle 2 elements
-//            result = (asList.get(asList.size()/2) + asList.get(asList.size()/2 + 1)) / 2;
+//            result = (asList.get(asList.size()/2) + asList.get(asList.size()/2 - 1)) / 2;
 //        }
 //        return result;
 //    }
@@ -114,7 +114,7 @@ public class Utilities {
 //            result = asList.get(asList.size()/2);
 //        } else {
 //            // even number of elements: take the average of middle 2 elements
-//            result = (asList.get(asList.size()/2) + asList.get(asList.size()/2 + 1)) / 2;
+//            result = (asList.get(asList.size()/2) + asList.get(asList.size()/2 - 1)) / 2;
 //        }
 //        return result;
 //    }
@@ -138,6 +138,7 @@ public class Utilities {
     interface ElementSelector<T> {
         T select(Collection<T> elements);
     }
+    //  Function: Java 8 (2014). Example when we test.
 
     public static <T> T median5(Collection<T> elements, Comparator<T> comp,
                                 Function<List<T>, T> selector) throws IllegalArgumentException {

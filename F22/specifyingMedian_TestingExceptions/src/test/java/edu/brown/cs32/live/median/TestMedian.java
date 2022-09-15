@@ -23,14 +23,16 @@ public class TestMedian {
     @Test
     public void testMedianEmpty() {
         // We didn't return null; how can we check for an exception?
-        // Need to pass a _function_ as the second argument.
+        // Need to pass a _function_ as the second argument. These have been around since 2014.
+        //    You may also hear them referred to as "lambdas" for historical/math reasons.
+        //    In 0320 we cheerfully steal from OO and from functional as it suits us.
         assertThrows(
                 IllegalArgumentException.class,
                 () -> Utilities.median5(null, null, null));
         // This WILL NOT WORK! The exception will be thrown before assertThrows has a chance to set up.
-//        assertThrows(
-//                IllegalArgumentException.class,
-//                Utilities.median5(null, null, null));
+        assertThrows(
+                IllegalArgumentException.class,
+                Utilities.median5(null, null, null));
 
         // The () -> ... is a modern Java version of defining a new class extending Executable
         // or the more verbose, but inline...
