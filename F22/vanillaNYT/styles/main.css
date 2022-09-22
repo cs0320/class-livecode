@@ -1,7 +1,7 @@
-.correct-guess {
+.correct-try {
     background-color: green;
 }
 
-.incorrect-guess {
+.incorrect-try {
     background-color: red;
 }
