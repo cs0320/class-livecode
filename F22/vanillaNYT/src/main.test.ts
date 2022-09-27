@@ -37,3 +37,11 @@ test('pattern true for increasing', () => {
     expect(pattern(['-3','-2','-1'])).toBe(true);    
     expect(pattern(['-1','-2','-3'])).toBe(false);    
   });
+
+  test('compare as numbers, not by length', () => {
+    const input = ['3','22','111']
+    const output = pattern(input)    
+    expect(output).toBe(true);
+  });
+
+

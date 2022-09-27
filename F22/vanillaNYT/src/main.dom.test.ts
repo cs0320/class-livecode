@@ -42,7 +42,7 @@ beforeEach(() => {
 // test how the result of pattern function impacts *state*
 
 test('false pattern: adds incorrect-guess div', () => {
-    const falseMock = jest.fn(guess => false)
+    const falseMock = (guess: string[]) => false
     
     // JS template strings, like Python fstrings. Used to help debug this.
     // console.log(`updateGuesses=${main.updateGuesses}`)
@@ -67,8 +67,9 @@ test('false pattern: adds incorrect-guess div', () => {
     expect(correctTries.length).toBe(0)
     expect(incorrectTries.length).toBe(1)
 
-    // Demo functionality (not strictly needed here):
-    expect(falseMock).toBeCalled()
+    // Demo functionality (not strictly needed here)
+    // Removed for simplicity; see jest.fn(...) for fancy mocks
+    // expect(falseMock).toBeCalled()
   })
 
   test('true pattern: adds incorrect-guess div', () => {

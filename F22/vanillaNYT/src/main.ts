@@ -42,9 +42,9 @@ let tryButton: HTMLButtonElement
 
 
 window.onload = () => {
-    // (1) On window load, get the reference to the guess button
+    // (1) On window load, get the reference to the button
     // We could do this...
-    // guessButton = document.getElementById("guess-button") as HTMLButtonElement
+    // guessButton = document.getElementById("try-button") as HTMLButtonElement
     // ...but it would be a typecast! No protection from TypeScript. Instead:
     const maybeTryButton: null | HTMLElement = document.getElementById("try-button")
     if(maybeTryButton == null) {
@@ -135,6 +135,11 @@ function clearHistory() {
   history = []
 }
 
+function getHistory() {
+  // defensive copy
+  return history.slice()
+}
+
 // For testing purposes, export everything we need
-export {pattern, updateHistoryAndRender, clearHistory};
+export {pattern, updateHistoryAndRender, clearHistory, getHistory};
 export type {PatternFunction};
