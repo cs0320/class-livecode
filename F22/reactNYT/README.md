@@ -4,7 +4,7 @@ This is a fresh version of the app previously deployed [here](https://github.com
 
 If you're reading this as a student, note that much of the readme is meant for _me_ (Tim) for framing the demo in class and calling out potential issues.
 
-To run: `yarn install` and then `yarn start`.
+To run: `npm install` and then `npm start`.
 
 ## Initialization
 
@@ -12,7 +12,7 @@ Although we had the example app from last year, I created a fresh React app firs
 
 Note that to _deploy_ the new version, this code needs to be moved over as a commit or PR to the reactNYT Github repo, and then the deployment script needs to be run. This repo is for storing the livecode.
 
-I then copied the main `App` component's "class prep" version from last year to `Puzzle` here. I think I misnamed the file extension previously (it should have been `.tsx` or at minimum `.jsx`.) Regardless, we didn't use Typescript very much last semester, so the component needed updating anyway. 
+I then copied the main `App` component's "class prep" version from last year to `Puzzle` here. I think I misnamed the file extension previously (it should have been `.tsx` or at minimum `.jsx`.) Regardless, we didn't use Typescript very much last semester, so the component needed updating anyway.
 
 ## React 
 
