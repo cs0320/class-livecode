@@ -1,5 +1,3 @@
-package edu.brown.cs32.spring22.livecode.Mar01;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -20,11 +18,12 @@ public class Main {
                 new Student("Boatswain"),
                 new Student("Bucky")).iterator());
 
+        // Another proxy pattern example (not covered in class)
         Iterator<Student> aggregatedQueue = new IteratorAggregator<>(queues);
         HoursDispatcher dispatcher =
                 new HoursDispatcher(aggregatedQueue, "Concurrency");
         dispatcher.addTA(new TA("Galen"), 120); // arbitrary TA name
-        dispatcher.addTA(new TA("Jenny"), 120); // arbitrary TA name
+        dispatcher.addTA(new TA("Tim"), 120);   // arbitrary TA name
         dispatcher.dispatch(); // like starting the REPL, never terminates
 
     }
