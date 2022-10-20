@@ -1,8 +1,8 @@
 .guess-round-false {
   background: #a00;
-  border: 1px solid #999;  
+  border: 2px dotted #999;  
 }
 .guess-round-true {
   background: #0a0;
-  border: 1px solid #999;  
+  border: 3px solid #999;  
 }

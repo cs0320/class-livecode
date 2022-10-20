@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+// Outside the braces = "default export"; inside = other exports
 import Puzzle, { TEXT_number_1_accessible_name, TEXT_number_2_accessible_name, TEXT_number_3_accessible_name, TEXT_try_button_accessible_name, TEXT_try_button_text } from './Puzzle';
 import userEvent from '@testing-library/user-event';
 
@@ -8,9 +9,9 @@ test('renders guess button', () => {
   // case insensitive regex:
   //const buttonElement = screen.getByText(/Try it!/i);
   // Better, less brittle:
-  const buttonElement = screen.getByText(new RegExp(TEXT_try_button_text));
-  // That's not very selective, though. We'll do better in the next test.
+  const buttonElement = screen.getByText(new RegExp(TEXT_try_button_text));  
   expect(buttonElement).toBeInTheDocument();
+  // That's not very selective, though. We'll do better in the next test.
 });
 
 // RTL discourages searching by class name, although it's possible to do. 
@@ -33,8 +34,8 @@ test('renders guess input fields', () => {
     expect(guess2).toBeInTheDocument()
 });
 
-// TODO discuss: is this the right way to use labels? 
-//   aria-label attribute vs. a <label ...> element with a "for" value?
+// Note this is a "wide" test, because it actually clicks a button and inspects the result.
+// (RTL makes this much easier, and using accessibility metadata well helps too.)
 test('entering correct guess', () => {
     render(<Puzzle />);    // Don't forget this :-) 
 
@@ -81,4 +82,7 @@ test('entering incorrect guess (same values)', () => {
     expect(correctBlock).toBeNull()
 });
 
+/*
+  Discuss: what tests are missing here?
+*/ 
   
