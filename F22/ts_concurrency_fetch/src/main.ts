@@ -88,5 +88,53 @@ export function printGridInfo() {
           }
         })
         .catch(problem => console.log(problem))
+
+    /* Added Oct 21 to resolve a question about 'threads'. 
+    
+       Technically you can get true concurrency in JavaScript, but 
+       doing so is fairly advanced and we aren't covering it. 
+       (If you're curious, look up "web workers".)
+
+       Ordinary JavaScript (and thus TypeScript) has only one thread. 
+       Promises don't create new threads; they enable asynchonous 
+       execution. The computation queued in the promise is part of 
+       the callback queue, and so:
+         - it cannot run until the current execution is finished; and
+         - once pulled from the queue and run, nothing else can run
+           until it finishes.
+    */ 
+    notThreadsDemo()
+
+}
+
+// See call site for comment re: purpose
+function notThreadsDemo() {
+  console.log('starting demo')
+  let value = 0
+
+  // This performs the slow computation and then resolves 
+  // the promise with the resulting value. Thus, nothing after
+  // this block can execute until it's finished. It isn't 
+  // creating a new thread.
+  let promise = new Promise((resolve, reject) => {
+    resolve(slowComputationFib(10, 'from promise'))
+  })
+  // ^ We're also throwing out the result  
+  console.log(promise) // Promise { <state>: "fulfilled", <value>: 89 }
+
+  value = 5
+  console.log(`value=${value}`)
+
+  slowComputationFib(10, 'outside promise')
+  // ^ throwing out the result of this, also
+  // If these were separate threads, we'd probably expect to see 
+  //   their execution interleaved, but we don't!
+}
+
+// Fibonacci without caching
+function slowComputationFib(n: number, label: string): number {
+  console.log(`${label}: ${n}`)
+  if(n <= 1) return 1
+  return slowComputationFib(n-1, label) + slowComputationFib(n-2, label)
 }
 
