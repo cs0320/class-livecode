@@ -107,7 +107,7 @@ function NewRound({addGuess, setNotification}: NewRoundProps) {
 
 export default function Puzzle() {
   const [guesses, setGuesses] = useState<string[][]>([]);
-  const [notification, setNotification] = useState('');
+  const [notification, setNotif] = useState('');
   return (
     <div className="App">   
       { guesses.map( (guess,guessNumber) => 
@@ -115,7 +115,7 @@ export default function Puzzle() {
           guess={guess}
           key={guessNumber} />)}
       <NewRound         
-        setNotification={setNotification}
+        setNotification={setNotif}
         addGuess={(guess: string[]) => {          
           const newGuesses = guesses.slice(); 
           newGuesses.push(guess)

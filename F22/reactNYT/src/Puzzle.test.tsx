@@ -1,8 +1,14 @@
 import React from 'react';
+// Lets us render a component and send queries
 import { render, screen } from '@testing-library/react';
 // Outside the braces = "default export"; inside = other exports
 import Puzzle, { TEXT_number_1_accessible_name, TEXT_number_2_accessible_name, TEXT_number_3_accessible_name, TEXT_try_button_accessible_name, TEXT_try_button_text } from './Puzzle';
+// Lets us send user events
 import userEvent from '@testing-library/user-event';
+// Lets us check whether an element is within another element
+import {within} from '@testing-library/dom'
+// Lets us use 'toBeInTheDocument()' 
+import '@testing-library/jest-dom'
 
 test('renders guess button', () => {
   render(<Puzzle />);
@@ -56,10 +62,10 @@ test('entering correct guess', () => {
     // https://www.w3.org/TR/html-aria/#docconformance
     
     // Any role...
-    const correctBlock = screen.getByRole(/.*/, {name: 'correct guess'})    
+    const correctBlock = screen.getByRole(/.*/, {name: 'correct sequence'})    
     expect(correctBlock).toBeInTheDocument()
     // "query" version will not error if nothing found, will just be null
-    const incorrectBlock = screen.queryByRole(/.*/, {name: 'incorrect guess'})    
+    const incorrectBlock = screen.queryByRole(/.*/, {name: 'incorrect sequence'})    
     expect(incorrectBlock).toBeNull()
 });
 
@@ -76,9 +82,12 @@ test('entering incorrect guess (same values)', () => {
     userEvent.type(guess2, '100')
     userEvent.click(submitButton)
 
-    const incorrectBlock = screen.getByRole(/.*/, {name: 'incorrect guess'})    
+    // I had originally left these as the wrong strings to motivate string mismatch,
+    //   but we didn't have time in class. So I just fixed these to say "sequence":
+
+    const incorrectBlock = screen.getByRole(/.*/, {name: 'incorrect sequence'})    
     expect(incorrectBlock).toBeInTheDocument()
-    const correctBlock = screen.queryByRole(/.*/, {name: 'correct guess'})    
+    const correctBlock = screen.queryByRole(/.*/, {name: 'correct sequence'})    
     expect(correctBlock).toBeNull()
 });
 
@@ -86,3 +95,56 @@ test('entering incorrect guess (same values)', () => {
   Discuss: what tests are missing here?
 */ 
   
+
+/*
+  Questions from class/after:
+    - how can I turn a string into a promise to produce it?
+       answered in 2 example tests below
+    - how can I check that an element is inside another element using RTL?
+       answered in an example test below
+    - what do the various imports above do?
+       answered in comments above the imports
+*/
+
+test('create a promise from a value, way 1', () => {
+  // Create a promise to return 'happy tuesday!'
+  const myString: string = 'happy tuesday!'
+  const myPromise: Promise<string> = new Promise( (resolve) => {resolve(myString)})
+  
+  // See: https://jestjs.io/docs/asynchronous
+  return myPromise.then(s => expect(s).toBe(myString))
+})
+
+test('create a promise from a value, way 2', () => {
+  // Create a promise to return 'happy tuesday!'
+  const myString: string = 'happy tuesday!'
+  const myPromise: Promise<string> = Promise.resolve(myString)
+  
+  // See: https://jestjs.io/docs/asynchronous
+  return myPromise.then(s => expect(s).toBe(myString))
+})
+
+test('check that the text fields are within the fieldset', () => {
+  render(<Puzzle />);    // Don't forget this :-) 
+
+  const fieldSet = screen.getByRole(/.*/, {name: 'Enter a 3-number sequence:'})  
+  
+  // We will use 'within' here
+  // https://testing-library.com/docs/dom-testing-library/api-within/
+  const guess0 = within(fieldSet).getByRole("textbox", {name: TEXT_number_1_accessible_name})    
+  const guess1 = within(fieldSet).getByRole("textbox", {name: TEXT_number_2_accessible_name})    
+  const guess2 = within(fieldSet).getByRole("textbox", {name: TEXT_number_3_accessible_name})  
+  
+  expect(guess0).not.toBeNull()
+  expect(guess1).not.toBeNull()
+  expect(guess2).not.toBeNull()
+
+  // Just in case, let's check for an element that _isn't_ contained within the fieldset
+  // Again, we'll use 'queryByRole' because that returns null, rather than erroring, if the
+  //   target doesn't exist.
+  const submitButton = within(fieldSet).queryByRole("button", {name: TEXT_try_button_accessible_name})  
+  expect(submitButton).toBeNull()
+
+})
+
+
