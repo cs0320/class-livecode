@@ -7,12 +7,18 @@
     https://api.weather.gov/points/39.7456,-97.0892
 */
 
+// For demo added Oct 26
+// Note annoying .js addition
+import { doSomethingWithForecastURL } from './bewareAsync.js'
+
 
 window.onload = () => {
     const button: HTMLElement | null = document.getElementById("try-button")
     if(button == null) return;
     if(!(button instanceof HTMLButtonElement)) return;
     button.addEventListener('click', printGridInfo)
+
+    doSomethingWithForecastURL()
 }
 
 
@@ -137,4 +143,3 @@ function slowComputationFib(n: number, label: string): number {
   if(n <= 1) return 1
   return slowComputationFib(n-1, label) + slowComputationFib(n-2, label)
 }
-
