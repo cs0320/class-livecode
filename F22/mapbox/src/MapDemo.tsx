@@ -1,9 +1,9 @@
 //import './Puzzle.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Map, {    
    ViewState, ViewStateChangeEvent,
    MapLayerMouseEvent,
-   Source, Layer } from 'react-map-gl'
+   Source, Layer } from 'react-map-gl'  
 
 // This won't be pushed to the repo; add your own!
 // You'll need to have the file within the 'src' folder, though
@@ -11,10 +11,14 @@ import Map, {
 //  key from denial-of-service attack...)
 import {myKey} from './private/key'
 
+import {overlayData, geoLayer} from './overlays' 
+
 export default function Puzzle() {
+  // Providence is at {lat: 41.8245, long: -71.4129}
+
   const [viewState, setViewState] = useState<ViewState>({
-    longitude: 12.3,
-    latitude: 45.6,
+    longitude: -71.4129,
+    latitude: 41.8245,
     zoom: 10,
     bearing: 0,
     pitch: 0,
@@ -25,6 +29,13 @@ export default function Puzzle() {
     padding: {top: 1, bottom: 20, left: 1, right: 1}
   });  
   
+  const [overlay, setOverlay] = useState<GeoJSON.FeatureCollection | undefined>(undefined)
+
+  // Run this _once_, and never refresh (empty dependency list)
+  useEffect(() => {
+    setOverlay(overlayData)
+  }, []) 
+
   return (
     <div className="map-demo">
       <div className="map-demo-map">   
@@ -42,7 +53,12 @@ export default function Puzzle() {
          onClick={(ev: MapLayerMouseEvent) => console.log(ev)}
          // This is too big, and the 0.9 factor is pretty hacky
          style={{width:window.innerWidth, height:window.innerHeight*0.9}} 
-         mapStyle={'mapbox://styles/mapbox/light-v10'}/>       
+         mapStyle={'mapbox://styles/mapbox/light-v10'}>
+
+          <Source id="geo_data" type="geojson" data={overlay}>
+                    <Layer {...geoLayer} />
+                  </Source>
+        </Map>       
       </div>
       <div className='map-status'>
         {`lat=${viewState.latitude.toFixed(4)},
