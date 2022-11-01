@@ -1,9 +1,8 @@
 import { FeatureCollection } from "geojson";
 import { FillLayer } from "react-map-gl";
 
-// Import the raw JSON file, and re-export for convenience
+// Import the raw JSON file
 import rl_data from "./mockData/fullDownload.json"
-export {rl_data}
 
 // Type predicate for FeatureCollection
 function isFeatureCollection(json: any): json is FeatureCollection {
