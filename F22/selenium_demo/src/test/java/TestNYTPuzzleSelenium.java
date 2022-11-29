@@ -55,7 +55,7 @@ public class TestNYTPuzzleSelenium {
     @Test
     public void testCorrect() {
         driver.get(indexPath);
-        assertEquals(driver.getTitle(), "React App");
+        assertEquals("Can You Guess The Sequence?", driver.getTitle());
 
         WebElement newRound = driver.findElement(By.className("new-round"));
         List<WebElement> inputs = newRound.findElements(By.tagName("input"));
@@ -87,7 +87,6 @@ public class TestNYTPuzzleSelenium {
     @Test
     public void testWrong() {
         driver.get(indexPath);
-        assertEquals(driver.getTitle(), "React App");
 
         WebElement newRound = driver.findElement(By.className("new-round"));
         List<WebElement> inputs = newRound.findElements(By.tagName("input"));
