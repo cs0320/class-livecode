@@ -17,5 +17,5 @@ jobs:
           java-version: '18'
           distribution: 'adopt'
           cache: maven
-      - name: Build with Maven
-        run: cd F22; mvn test
+      - name: Build and test the selenium_demo with Maven
+        run: cd F22/selenium_demo; mvn test
