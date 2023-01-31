@@ -3,6 +3,7 @@ package edu.brown.cs32.live.main;
 import edu.brown.cs32.live.diplomacy.Diplomat;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import edu.brown.cs32.live.diplomacy.Diplomat.Rank;
@@ -30,11 +31,11 @@ public class Main {
         diplomats = new ArrayList<>(diplomats);
 
         // Sort without nuncios taking precedence
-        Sorts.bubbleSort(diplomats, new PrecedenceComparator());
+        diplomats.sort(new PrecedenceComparator());
         System.out.println("Sort 1: "+ diplomats);
 
         // Sort with nuncios taking precedence
-        Sorts.bubbleSort(diplomats, new PrecedenceComparator(Rank.NUNCIO));
+        diplomats.sort(new PrecedenceComparator(Rank.NUNCIO));
         System.out.println("Sort 2: "+ diplomats);
 
 

@@ -56,8 +56,8 @@ public class PrecedenceComparator implements Comparator<Diplomat> {
         // By documentation (see mouseover): Negative if o1 < o2; zero if o1 == o2; positive if o1 > o2
         //   the sign of compare(x,y) must be the same as compare(y,x), and compare must be transitive.
 
-        if(o1.rank() == this.givePrecedence) return 1;
-        if(o2.rank() == this.givePrecedence) return -1;
+        if(o1.rank() == this.givePrecedence) return -1;
+        if(o2.rank() == this.givePrecedence) return 1;
 
         // NOTE: I personally like Java 17's pattern-matching switch expressions for these situations.
         // I find them easier to read than complicated if-statements, and I will get a warning if I don't give a case
@@ -68,18 +68,18 @@ public class PrecedenceComparator implements Comparator<Diplomat> {
         return switch(o1.rank()) {
             case NUNCIO, AMBASSADOR, HIGH_COMMISSIONER ->
                     switch(o2.rank()) {
-                        case NUNCIO, AMBASSADOR, HIGH_COMMISSIONER -> 0;
-                        case ENVOY, MINISTER, CHARGE_DAFFAIRES -> 1;
+                        case NUNCIO, AMBASSADOR, HIGH_COMMISSIONER -> 0; // same
+                        case ENVOY, MINISTER, CHARGE_DAFFAIRES -> -1; // N/A/H before E/M/C
                     };
             case MINISTER, ENVOY ->
                     switch(o2.rank()) {
-                        case NUNCIO, AMBASSADOR, HIGH_COMMISSIONER -> -1;
+                        case NUNCIO, AMBASSADOR, HIGH_COMMISSIONER -> 1;
                         case ENVOY, MINISTER -> 0;
-                        case CHARGE_DAFFAIRES -> 1;
+                        case CHARGE_DAFFAIRES -> -1;
                     };
             case CHARGE_DAFFAIRES ->
                     switch(o2.rank()) {
-                        case NUNCIO, AMBASSADOR, HIGH_COMMISSIONER, ENVOY, MINISTER -> -1;
+                        case NUNCIO, AMBASSADOR, HIGH_COMMISSIONER, ENVOY, MINISTER -> 1;
                         case CHARGE_DAFFAIRES -> 0;
                     };
         };
