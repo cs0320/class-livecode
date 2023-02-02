@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.Test;
-import edu.brown.cs32.whyDefineEquals.Point;
-import edu.brown.cs32.whyDefineEquals.PointWithBoth;
-import edu.brown.cs32.whyDefineEquals.PointWithEquals;
+import edu.brown.cs32.points.Point;
+import edu.brown.cs32.points.PointWithBoth;
+import edu.brown.cs32.points.PointWithEquals;
 
 import java.util.HashSet;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TestDefiningEqualityMatters {
+public class TestDefiningEqualityMatters_PREP {
 
     @Test
     public void equalityMattersForLists() {

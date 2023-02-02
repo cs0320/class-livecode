@@ -1,4 +1,4 @@
-package edu.brown.cs32.whyDefineEquals;
+package edu.brown.cs32.points;
 
 /**
  * A point in 2-dimensional space.
