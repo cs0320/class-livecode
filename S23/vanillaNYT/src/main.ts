@@ -6,23 +6,29 @@
   load but won't actually do anything when the button is clicked.
 */
 
+///////////////////////////////////////////////////////////////////////////////
 // First, make this code generic over different pattern-testing functions
 // This is useful both for extensibility *and* testing.
+///////////////////////////////////////////////////////////////////////////////
 
 // TypeScript does something unusual here: the type contains an argument name
 // However, this turns out not to pattern (the function doesn't need to use the
 //   same argument name as the type does, so long as the types correspond.)
 type PatternFunction = (a_guess_argument: string[]) => boolean;
-
 // Now we can use `PatternFunction` everywhere we need to work with pattern-checker functions.
+
+///////////////////////////////////////////////////////////////////////////////
+// State management for the app
+///////////////////////////////////////////////////////////////////////////////
 
 // Each pattern is stored as an array of strings. The `history` stores all previous patterns tried.
 let history: Array<Array<string>> = [];
 // A global reference to the guess button, which we'll set below
 let tryButton: HTMLButtonElement;
 
-////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 // The app's pattern checker function
+///////////////////////////////////////////////////////////////////////////////
 
 /**
  * Tells whether or not a guess was correct.
@@ -37,42 +43,51 @@ function pattern(guess: string[]): boolean {
   return true;
 }
 
-////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+// Set up the app by giving the browser a function to run when the window loads
+///////////////////////////////////////////////////////////////////////////////
 
 window.onload = () => {
-  // (1) On window load, get the reference to the button
-  // We could do this...
-  // guessButton = document.getElementById("try-button") as HTMLButtonElement
-  // ...but it would be a typecast! No protection from TypeScript. Instead:
+  // (1) On window load, get the reference to the button  
   const maybeTryButton: null | HTMLElement =
     document.getElementById("try-button");
+  // At this point, Typescript doesn't know for sure this element exists, and if
+  // it exists, it might not be a button. So we use *narrowing* to handle those cases.
   if (maybeTryButton == null) {
-    console.log("Couldn't find the button");
+    console.log("Couldn't find the button");  
   } else if (!(maybeTryButton instanceof HTMLButtonElement)) {
     console.log("Found the 'button' but it wasn't really a button element.");
   } else {
-    tryButton = maybeTryButton; // now this is safe to do
+    // Now this is safe to do, because TypeScript can be sure this is a button.
+    tryButton = maybeTryButton; 
 
-    // (2) Make it so that whenever the button is clicked, our pattern function runs
+    // (2) Make it so that whenever the button is clicked, our pattern function 
+    // runs and the page is updated. A click listener takes no arguments, so 
+    // we pass a 0-argument function that, when called, updates history using
+    // our specific pattern function.
     tryButton.addEventListener("click", () => updateHistoryAndRender(pattern));
   }
 };
 
+///////////////////////////////////////////////////////////////////////////////
+// Helpers to update app state and/or the page
+///////////////////////////////////////////////////////////////////////////////
+
 /**
- * When the button is clicked, updates the history array and re-renders HTML.
+ * Updates the history array and re-renders the page's HTML.
  */
 function updateHistoryAndRender(patternChecker: PatternFunction) {
-  // Update the *STATE* of the script
+  // Update the *STATE* of the script, which remembers prior guesses
   updateGuessesState();
   // Update the *PAGE* (until this is called, nothing changes on the page)
   renderOldGuesses(patternChecker);
 }
 
+/**
+ * Update the internal state of the app (not the page HTML)
+ */
 function updateGuessesState() {
-  // Again, tempting to do this:
-  // const firstGuess = document.getElementById("guess-1") as HTMLInputElement
-  // const secondGuess = document.getElementById("guess-2") as HTMLInputElement
-  // const thirdGuess = document.getElementById("guess-3") as HTMLInputElement
+  // Again, we'll need to use narrowing to make _sure_ the type is correct:
   const firstGuess: HTMLElement | null = document.getElementById("num-1");
   const secondGuess: HTMLElement | null = document.getElementById("num-2");
   const thirdGuess: HTMLElement | null = document.getElementById("num-3");
@@ -95,6 +110,7 @@ function updateGuessesState() {
  * (If called without updating history, any guess in progress will be erased.)
  */
 function renderOldGuesses(patternChecker: PatternFunction) {
+  // The new HTML block to build for displaying this guess and its result
   let newHtml: string = "";
 
   // For every guess array in GUESSES...
@@ -103,7 +119,7 @@ function renderOldGuesses(patternChecker: PatternFunction) {
     const correct: boolean = patternChecker(sequence);
     // Append a correct or incorrect guess <div> to newHtml
     // Note that back-quoted strings in JS let us
-    //    (a) use the double-quote character (")") without escaping it
+    //    (a) use the double-quote character (") without escaping it
     //    (b) use ${} expressions to splice in the result of JS expressions
     newHtml += `<div class="${correct ? "correct-try" : "incorrect-try"}">
             <p>Guess #${tryNumber + 1}</p>
@@ -113,8 +129,7 @@ function renderOldGuesses(patternChecker: PatternFunction) {
         </div>`;
   });
 
-  // Replace the contents of the old-rounds <div> with the HTML we generated above
-  // Since I prefer not to use "id" and use "class" instead here, we have to do [0]...
+  // Replace the contents of the old-rounds <div> with the HTML we generated above.  
   const oldRoundsElements: HTMLCollectionOf<Element> =
     document.getElementsByClassName("old-rounds");
   if (oldRoundsElements == null || oldRoundsElements.length < 1) {
@@ -123,22 +138,25 @@ function renderOldGuesses(patternChecker: PatternFunction) {
   }
 
   const oldRoundsElement = oldRoundsElements[0];
-  if (!(oldRoundsElement instanceof HTMLElement)) {
-    console.log("first old-rounds element was not an HTMLElement");
-    return;
-  }
-
   oldRoundsElement.innerHTML = newHtml;
 }
+
+///////////////////////////////////////////////////////////////////////////////
+// Helpers added specifically for testing and automation
+///////////////////////////////////////////////////////////////////////////////
 
 function clearHistory() {
   history = [];
 }
 
 function getHistory() {
-  // defensive copy
+  // defensive copy!
   return history.slice();
 }
+
+///////////////////////////////////////////////////////////////////////////////
+// What does this module export? (I.e., what can be used in another module?)
+///////////////////////////////////////////////////////////////////////////////
 
 // For testing purposes, export everything we need
 export { pattern, updateHistoryAndRender, clearHistory, getHistory };
