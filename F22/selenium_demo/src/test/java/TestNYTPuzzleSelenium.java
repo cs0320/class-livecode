@@ -9,11 +9,12 @@
       sometimes help you find the problem.
  */
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -29,7 +30,7 @@ public class TestNYTPuzzleSelenium {
     /**
      * Set up for a new test
      */
-    @Before
+    @BeforeEach
     public void setup() {
         WebDriverManager.firefoxdriver().setup();
         FirefoxOptions options = new FirefoxOptions();
@@ -45,7 +46,7 @@ public class TestNYTPuzzleSelenium {
     /**
      * Remove references created by a test, reset to old state, etc.
      */
-    @After
+    @AfterEach
     public void tearDown() {
         driver.quit();
 
