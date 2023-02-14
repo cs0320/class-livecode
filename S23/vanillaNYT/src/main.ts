@@ -21,7 +21,8 @@ type PatternFunction = (a_guess_argument: string[]) => boolean;
 // State management for the app
 ///////////////////////////////////////////////////////////////////////////////
 
-// Each pattern is stored as an array of strings. The `history` stores all previous patterns tried.
+// Each pattern is stored as an array of strings.
+// The `history` stores all previous patterns tried.
 let history: Array<Array<string>> = [];
 // A global reference to the guess button, which we'll set below
 let tryButton: HTMLButtonElement;
@@ -122,7 +123,7 @@ function renderOldGuesses(patternChecker: PatternFunction) {
     //    (a) use the double-quote character (") without escaping it
     //    (b) use ${} expressions to splice in the result of JS expressions
     newHtml += `<div class="${correct ? "correct-try" : "incorrect-try"}">
-            <p>Guess #${tryNumber + 1}</p>
+            <p>Guess ${tryNumber + 1} was ${correct ? "correct" : "incorrect"}</p>
             <input value="${sequence[0]}" readonly />
             <input value="${sequence[1]}" readonly />
             <input value="${sequence[2]}" readonly />

@@ -1,14 +1,15 @@
+// Import all available from the program under test
+// (If you change it, remember to `tsc`)
 import * as main from './main'
 
-// We're going to *mock* a pattern function to test functionality more narrowly
-// Reasons to mock include:
-//   - want to isolate specific behaviors without tangling (our goal, here)
-//   - want to spy on metadata (e.g., has a function been called?)
-//   - want to avoid the cost of invocation (e.g., function under test calls a web API)
-//   - want to avoid non-deterministic behavior
-//   -   ... etc.
+// Lets us use DTL's query library
+import {screen} from '@testing-library/dom'
+// Lets us send user events (like typing and clicking)
+import userEvent from '@testing-library/user-event';
 
-// Template HTML for test running. Make sure the class names, etc. match
+// Template HTML for test running. 
+// Notice that we don't need to include everything in the page. 
+// Also, notice that we've preserved the metadata...
 const startHTML =     
 `<section class="old-rounds">
 </section>
@@ -28,67 +29,67 @@ const startHTML =
 
 /////////////////////////////////////////////////////////////
 
+let tryButton: HTMLElement
+// Don't neglect to give the type for _every_ identifier.
+let input1: HTMLElement, input2: HTMLElement, input3: HTMLElement
+
 // Setup! This runs /before every test function/
 beforeEach(() => {
-  // Before each test function, restore the history to empty
+  // (1) Restore the program's history to empty
   main.clearHistory()
 
-  // Set up a mock document containing the skeleton that index.html starts with
+  // (2) Set up a mock document containing the skeleton that 
+  // index.html starts with. This is refreshed for every test.
   document.body.innerHTML = startHTML
+
+  // (3) Find the elements that should be present at the beginning
+  // Using "getBy..." will throw an error if this element doesn't exist.
+  tryButton = screen.getByText("Try it!")
+  input1 = screen.getByLabelText("Guess 1")
+  input2 = screen.getByLabelText("Guess 2")
+  input3 = screen.getByLabelText("Guess 3")
 });
 
 /////////////////////////////////////////////////////////////
+// Some example tests
+/////////////////////////////////////////////////////////////
 
-// test how the result of pattern function impacts *state*
-
-test('false pattern: adds incorrect-guess div', () => {
+test('false pattern: adds incorrect-guess div (ignore actual entry)', () => {
+    // Create a pattern function that always returns false
     const falseMock = (guess: string[]) => false
-    
-    // JS template strings, like Python fstrings. Used to help debug this.
-    // console.log(`updateGuesses=${main.updateGuesses}`)
-    // console.log(`pattern=${main.pattern}`)
+    // tell `main` to use that mock function when rendering
+    tryButton.addEventListener("click", () => main.updateHistoryAndRender(falseMock));
   
-    // Setup similar to the real module's window.onload()
-    // Using typecasting here without too much guilt; an error will fail the test
-    // const guessButton = document.getElementById("try-button") as HTMLButtonElement
+    // Alternatively, we could check behavior of the update function itself directly:
+    // main.updateHistoryAndRender(falseMock)    
+
+    // We _could_ also simulate typing in the input fields via userEvent.type(...)
+    // But this test is meant to be independent of the exact guess.
+
+    userEvent.click(tryButton)
+    // Now, did we get an incorrect-try block?
     
-    // Mock the pattern to always return *false*, so we don't need to populate
-    // the text fields at all. Just click the button...
-    // guessButton.addEventListener("click", () => main.updateHistoryAndRender(falseMock))            
-    // guessButton.click()
-
-    // Actually, that's not needed at all. Instead, check behavior of the update function itself:
-    main.updateHistoryAndRender(falseMock)
-    // We didn't even *NEED* the guessButton!
-
-    // ...and we should see an incorrect-guess block
-    const correctTries = document.getElementsByClassName("correct-try")
-    const incorrectTries = document.getElementsByClassName("incorrect-try")
-    expect(correctTries.length).toBe(0)
+    // Could do this, but is the class name something a user (or screenreader) sees?
+    // const incorrectTries = document.getElementsByClassName("incorrect-try")    
+    // We should prefer this instead:
+    const incorrectTries = screen.getAllByText("Guess 1 was incorrect") 
     expect(incorrectTries.length).toBe(1)
-
-    // Demo functionality (not strictly needed here)
-    // Removed for simplicity; see jest.fn(...) for fancy mocks
-    // expect(falseMock).toBeCalled()
   })
 
-  test('true pattern: adds incorrect-guess div', () => {
-    const trueMock = jest.fn(guess => true)
-    document.body.innerHTML = startHTML
+  test('entering data updates internal state', () => {
+    const falseMock = (guess: string[]) => false
 
-    // Note: if we don't reset GUESSES, the prior test run will add a 2nd guess to the array
-    //   resulting in 2, not 1, correct-guess blocks    
-      
-    main.updateHistoryAndRender(trueMock)    
-      
-    const correctTries = document.getElementsByClassName("correct-try")
-    const incorrectTries = document.getElementsByClassName("incorrect-try")
-    expect(correctTries.length).toBe(1)
-    expect(incorrectTries.length).toBe(0)
+    userEvent.type(input1, "1")
+    userEvent.type(input2, "2")
+    userEvent.type(input3, "3")
+    main.updateHistoryAndRender(falseMock)
+    expect(main.getHistory()).toContain(["1","2","3"])
   })
 
 /////////////////////////////////////////////////////////////
 
-// What's missing? 
-//   We're not yet testing how a state change impacts the rendering of the DOM
+// Yes, you can combine the ideas in these two tests. If you want, you can
+// do everything in a test via the UI---type values, click, look at the HTML result.
+
+// Exercise: What's missing? 
 
