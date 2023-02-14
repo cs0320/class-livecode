@@ -106,6 +106,10 @@ function updateGuessesState() {
   }
 }
 
+// If there's a constant text/label we want to search for, export it as a constant!
+// (then tests will use it and changing it won't break tests)
+export const CONST_success_try = "Guess was correct!"
+
 /**
  * Re-renders the HTML based on the current history array.
  * (If called without updating history, any guess in progress will be erased.)

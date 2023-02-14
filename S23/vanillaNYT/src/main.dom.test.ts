@@ -58,11 +58,11 @@ test('false pattern: adds incorrect-guess div (ignore actual entry)', () => {
     // Create a pattern function that always returns false
     const falseMock = (guess: string[]) => false
     // tell `main` to use that mock function when rendering
-    tryButton.addEventListener("click", () => main.updateHistoryAndRender(falseMock));
+    tryButton.addEventListener("click", 
+      () => main.updateHistoryAndRender(falseMock));
   
-    // Alternatively, we could check behavior of the update function itself directly:
-    // main.updateHistoryAndRender(falseMock)    
-
+    // Alternatively, we could check behavior of the update function 
+    // itself directly: main.updateHistoryAndRender(falseMock)    
     // We _could_ also simulate typing in the input fields via userEvent.type(...)
     // But this test is meant to be independent of the exact guess.
 
@@ -81,9 +81,35 @@ test('false pattern: adds incorrect-guess div (ignore actual entry)', () => {
 
     userEvent.type(input1, "1")
     userEvent.type(input2, "2")
-    userEvent.type(input3, "3")
+    userEvent.type(input3, "3")    
     main.updateHistoryAndRender(falseMock)
-    expect(main.getHistory()).toContain(["1","2","3"])
+    const current = main.getHistory()
+    // Why is this giving an error? Let's try variations...
+    //expect(current).toContain(["1","2","3"])
+
+    // these are OK
+    expect(current.length).toBe(1)
+    expect(current[0].length).toBe(3)
+    expect(current[0][0]).toBe("1") 
+    expect(current[0][1]).toBe("2") 
+    expect(current[0][2]).toBe("3") 
+
+    // these are _not_ OK
+    //expect(current[0]).toBe(["1","2","3"])
+    //expect(current).toBe([["1","2","3"]])
+
+    // So what's going on? Hint: strings are primitive in TypeScript,
+    //  but lists/arrays are not. And "toContain" checks via ===. 
+    // If you enter this on the console, you get **false**: 
+    //      ["1", "2", "3"] == ["1", "2", "3"] 
+    
+    // Instead, Jest provides an "arrayContaining" matcher:    
+    expect(current).toEqual(expect.arrayContaining([["1", "2", "3"]]))
+    // That checks that "current" contains everything in [["1", "2", "3"]]
+    // so we also need to confirm in the other direction!
+    expect([["1", "2", "3"]]).toEqual(expect.arrayContaining(current))
+    // Make sure to use this with toEqual, not toBe -- see the mouseover docs:
+    // "You can use it inside toEqual or toBeCalledWith instead of a literal value."    
   })
 
 /////////////////////////////////////////////////////////////
