@@ -11,6 +11,8 @@ import java.util.regex.Pattern;
  * Example "naive" REPL. This first version uses an if-else statement
  * to decide which command to run, and all commands are hard coded.
  * Error handling is also rather messy and ad-hoc.
+ *
+ *  **THIS FILE SHOULD NOT BE CHANGED; IT SAVES THE BEGINNING STATE OF LIVECODE**
  */
 public class REPLStarter {
     public REPLStarter() {}

@@ -16,8 +16,10 @@ public class Subtractor implements CommandFunction {
             // YOU as developer-user can decide whether to print an error
             //  or something else (like throwing an exception)
             //   - make a new REPLFunctionError exception and throw it
-            System.err.println("Bad input: ...");
-            return ""; // we should do better than this
+            // System.err.println("Bad input: ...");
+            //return ""; // we should do better than this
+            throw new IllegalArgumentException("Bad input to subtract: need 2 integer args, got: "+
+                    args);
 
         }
     }

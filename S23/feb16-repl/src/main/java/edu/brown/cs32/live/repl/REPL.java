@@ -3,10 +3,8 @@ package edu.brown.cs32.live.repl;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,7 +13,7 @@ import java.util.regex.Pattern;
  * to decide which command to run, and all commands are hard coded.
  * Error handling is also rather messy and ad-hoc.
  */
-public class REPL {
+public class REPL implements Runnable {
     public REPL() {}
 
      /*
@@ -26,7 +24,20 @@ public class REPL {
       EXERCISE 3: how can we test this REPL?
      */
 
+    Map<String, CommandFunction> registry = new HashMap<>();
 
+    public CommandFunction registerCommand(String cmd, CommandFunction f) {
+        return registry.put(cmd.toUpperCase(), f);
+    }
+
+    // We could also use lambdas, like this:
+    // (args) -> { ... } ...
+//    Map<String, Function<List<String>, String>> registry = new HashMap<>();
+//    public Function<List<String>, String> registerCommand(String cmd, Function<List<String>, String> f) {
+//        return registry.put(cmd.toUpperCase(), f);
+//    }
+
+    @Override
     public void run() {
         // This is a "try with resources"; the resource will automatically
         // be closed if necessary. Prefer this over finally blocks.
@@ -36,25 +47,33 @@ public class REPL {
             while ((input = br.readLine()) != null) {
                 List<String> parsedInput = parseInput(input);
 
-                if (input.equalsIgnoreCase("EXIT")) {
-                    return; // exit the REPL
-                } else if (parsedInput.get(0).equalsIgnoreCase("HI")) {
-                    runHi(parsedInput);
-                } else if (parsedInput.get(0).equalsIgnoreCase("ADD")) {
-                    runAdd(parsedInput);
-                } else {
-                    // handle this gracefully; report to the user and continue
-                    System.err.println("ERROR: Invalid command name.");
+                try {
+
+                    if (input.equalsIgnoreCase("EXIT")) {
+                        return;
+                    } else if (registry.containsKey(parsedInput.get(0).toUpperCase())) {
+                        CommandFunction f = registry.get(parsedInput.get(0).toUpperCase());
+                        System.out.println(f.run(parsedInput));
+                    } else {
+                        // handle "no such command" gracefully; report to the user and continue
+                        System.err.println("ERROR: Invalid command name.");
+                    }
+                } catch(IllegalArgumentException ex) {
+                    System.err.println(ex.getMessage());
+                    // continue gracefully; the error was just about one command, maybe typo
                 }
+                // TODO: what happens if a different exception is encountered? What /should/
+                // happen? This is worth thinking about, related to the Server sprint.
             }
 
         /*
           EXERCISE 1: how can we improve this error handling?
          */
-        } catch (Exception ex) {
-            System.err.println("ERROR handling command!");
-            System.exit(1); // exit with error status
+        } catch (IOException ex) {
+            System.err.println("ERROR reading from input.");
+
         }
+
     }
 
     private void runHi(List<String> parsedInput) {

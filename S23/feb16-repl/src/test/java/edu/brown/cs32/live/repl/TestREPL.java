@@ -60,7 +60,10 @@ public class TestREPL {
     public void testREPLErrorOops() {
         REPL repl = new REPL();
         // What happens if we call repl.run(); ?
-        // repl.run();
+        //repl.run();
+        Thread replRunner = new Thread(repl);
+        replRunner.start();
+        System.out.println("hello");
 
         // But there's a problem...
         // Unfortunately even this doesn't work.
