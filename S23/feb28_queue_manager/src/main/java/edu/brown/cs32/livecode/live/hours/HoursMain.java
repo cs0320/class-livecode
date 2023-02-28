@@ -1,4 +1,4 @@
-package edu.brown.cs32.livecode.hours;
+package edu.brown.cs32.livecode.live.hours;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -25,7 +25,7 @@ class TA {
 public class HoursMain {
     public static void main(String[] args) {
         Iterator<Student> studentIterator = new ArrayList<Student>().iterator();
-        HoursDispatcherAdapter disp = new HoursDispatcherAdapter(studentIterator, "Test");
+        HoursDispatcherBasic disp = new HoursDispatcherBasic(studentIterator, "Test");
         // At this point we'd add students etc.
     }
 }

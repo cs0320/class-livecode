@@ -1,21 +1,14 @@
-package edu.brown.cs32.livecode.hours;
+package edu.brown.cs32.livecode.live.hours;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
-/**
- * HoursDispatcherBasic, except with:
- *   some better field modifiers (like final)
- *   defensive copy on return value of getMinutesLeft()
- */
-public class HoursDispatcherDefensive {
-    final private Iterator<Student> queue;
-    final private Map<TA, Integer> minutesLeft;
+public class HoursDispatcherBasic implements Dispatcher {
+    Iterator<Student> queue;
+    Map<TA, Integer> minutesLeft;
 
     String statusMessage;
 
-    HoursDispatcherDefensive(Iterator<Student> signups, String statusMessage) {
+    HoursDispatcherBasic(Iterator<Student> signups, String statusMessage) {
         this.queue = signups;
         this.statusMessage = statusMessage;
         this.minutesLeft = new HashMap<>();
@@ -25,7 +18,7 @@ public class HoursDispatcherDefensive {
      * @return the current minutes that each active TA has left
      */
     public Map<TA, Integer> getMinutesLeft() {
-        return new HashMap<>(minutesLeft);
+        return minutesLeft;
     }
 
     /**

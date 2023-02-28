@@ -1,8 +1,10 @@
-package edu.brown.cs32.livecode.hours;
+package edu.brown.cs32.livecode.prep.hours;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
-public class HoursDispatcherBasic {
+public class HoursDispatcherBasic implements Dispatcher {
     Iterator<Student> queue;
     Map<TA, Integer> minutesLeft;
 

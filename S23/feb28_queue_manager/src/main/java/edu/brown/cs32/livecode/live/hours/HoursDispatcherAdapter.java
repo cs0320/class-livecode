@@ -1,4 +1,4 @@
-package edu.brown.cs32.livecode.hours;
+package edu.brown.cs32.livecode.live.hours;
 
 import java.util.*;
 
@@ -7,15 +7,21 @@ import java.util.*;
  *   changes the interface! No longer offer a direct hours map
  *   instead, give a view object that hides the real TA object references and time.
  */
-public class HoursDispatcherAdapter {
+public class HoursDispatcherAdapter implements Dispatcher, LimitedDispatcher {
     private final Iterator<Student> queue;
     private final Map<TA, Integer> minutesLeft;
 
     /**
      * Returns a view of all the currently on duty TAs by name
      */
+    @Override
     public Collection<String> getOnDutyView() {
         return new OnDutyTAView();
+    }
+
+    @Override
+    public Map<TA, Integer> getMinutesLeft() {
+        throw new UnsupportedOperationException("use getOnDutyView instead");
     }
 
 

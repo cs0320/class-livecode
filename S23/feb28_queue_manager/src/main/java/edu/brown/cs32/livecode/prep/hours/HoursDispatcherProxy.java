@@ -1,13 +1,16 @@
-package edu.brown.cs32.livecode.hours;
+package edu.brown.cs32.livecode.prep.hours;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * HoursDispatcherDefensive with:
  *   only one canonical defensive map to return
  *   that's a pass-through unmodifiable proxy (via Java library!)
  */
-public class HoursDispatcherProxy {
+public class HoursDispatcherProxy implements Dispatcher {
     private final Iterator<Student> queue;
     private final Map<TA, Integer> minutesLeft;
 
