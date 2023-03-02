@@ -14,18 +14,18 @@ public class CachingMain {
             System.out.println("Error reading file.");
         }
     }
-
     /**
      * Use unproxied FileSearcher to search *twice*
      * @throws IOException
      */
     static void demo() throws IOException {
         Searcher fs = new FileSearcher("src/main/resources/frankenstein.txt");
+        Searcher ps = new SearcherProxy(fs);
         // Search once
-        for(String line : fs.searchLines("love")) {
+        for(String line : ps.searchLines("love")) {
             System.out.println(line);
         }
         // Search twice
-        System.out.println(fs.searchLines("love").size());
+        System.out.println(ps.searchLines("love").size());
     }
 }
