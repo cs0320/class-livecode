@@ -1,7 +1,5 @@
 /*
-  Added Oct 26, 2022
-  We did not cover async/await in class, and that was for _reasons_.
-  Async/await can make your asynch code looks more normal, which is
+  Async/await can make your asynch code look more "normal", which is
   great, but you're always dealing (invisibly) with promises. Demo:
 */
 
@@ -17,6 +15,8 @@ export interface NWSPointsResponse {
     properties: NWSPointsResponseProperties
 }
 
+// Async functions *APPEAR* to return a normal value, but don't be fooled.
+// their return type is Promise; the syntax just auto-wraps the return.
 async function getNWSForecastURL(): Promise<string> {
   // This is a raw API response
   const response: Response = await fetch('https://api.weather.gov/points/41.8268,-71.4029')
