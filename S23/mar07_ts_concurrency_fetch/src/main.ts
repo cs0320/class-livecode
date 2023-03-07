@@ -25,10 +25,19 @@ window.onload = () => {
 }
 
 
-/* We don't care about other fields; we can just leave them out */
+/** 
+ * Interface to represent "grid" responses from NWS.
+ * 
+ * We don't care about other fields; we can just leave them out 
+ */
 interface NWSGridResponse {
     properties: NWSGridResponseProperties    
 }
+/**
+ * Interface to represent "properties" sub-objects in NWS grid responses.
+ * 
+ * We don't care about other fields; we can just leave them out 
+ */
 interface NWSGridResponseProperties {
     gridX: number
     gridY: number
@@ -52,47 +61,48 @@ export function printGridInfo() {
       Try #2
       (Note syntax for giving types for lambda parameters)
     */
-    fetch(url)
-       .then((response: Response) => console.log(response)) 
+    // fetch(url)
+    //    .then((response: Response) => console.log(response)) 
 
     /* 
       Try #3
       Note that .json() returns _any_. Not great! 
       We have no idea what's in that Json... but at least we have it.
     */
-      fetch(url)
-      .then((response: Response) => response.json()) 
-      .then((responseObject: any) => {         
-           console.log(responseObject)         
-       })       
+      // fetch(url)
+      // .then((response: Response) => response.json()) 
+      // .then((responseObject: any) => {         
+      //      console.log(responseObject)         
+      //  })       
 
     /* 
       Try #4
     */
-    fetch(url)
-       .then((response: Response) => response.json()) 
-       // This is no help, because of how `any` works in TS:
-       //.then((responseObject: NWSGridResponse) => {
-        .then((responseObject: any) => {
-          // Beware, **STILL**:
-          // The type system isn't giving us protection here---response.json()
-          // produces a Promise<any>, so TS is happy to trust the type declared
-          // or inferred. The type annotation on the input variable is no help. 
+    // fetch(url)
+    //    .then((response: Response) => response.json()) 
+    //    // This is no help, because of how `any` works in TS:
+    //    //.then((responseObject: NWSGridResponse) => {
+    //     .then((responseObject: any) => {
+    //       // Beware, **STILL**:
+    //       // The type system isn't giving us protection here---response.json()
+    //       // produces a Promise<any>, so TS is happy to trust the type declared
+    //       // or inferred. The type annotation on the input variable is no help. 
 
-          // Instead, check dynamically:          
-          if(!isNWSGridResponse(responseObject)) { 
-            console.log('not a response')
-            console.log(responseObject)
-          } else {
-            // Note: mouseover reports that `responseObject` here is 
-            // an NWSGridResponse. Narrowing has happened, via type predicate.
-            //  (Without the type predicate, this would still be `any`)
-            console.log(responseObject.properties.gridId)
-            console.log(responseObject.properties.gridX)
-            console.log(responseObject.properties.gridY)
-          }
-        })
-        .catch(problem => console.log(problem))
+    //       // Instead, check dynamically:          
+    //       if(!isNWSGridResponse(responseObject)) { 
+    //         console.log('not a response')
+    //         console.log(responseObject)
+    //       } else {
+    //         // Note: mouseover reports that `responseObject` here is 
+    //         // an NWSGridResponse. Narrowing has happened, via type predicate.
+    //         //  (Without the type predicate, this would still be `any`)
+    //         console.log(responseObject.properties.gridId)
+    //         console.log(responseObject.properties.gridX)
+    //         console.log(responseObject.properties.gridY)
+    //       }
+    //     })
+    //     .catch(problem => console.log(problem))
+
 }
 
 // "Type predicates" for our Json response shapes
@@ -112,18 +122,21 @@ function isNWSGridResponseProperties(rjson: any): rjson is NWSGridResponseProper
 
 
 /** 
-       Technically you can get true concurrency in JavaScript, but 
-       doing so is fairly advanced and we aren't covering it. 
-       (If you're curious, look up, e.g., "web workers".)
-
-       Ordinary JavaScript (and thus TypeScript) has only one thread. 
-       Promises don't create new threads; they enable asynchonous 
-       execution. The computation that runs when the promise resolves 
-       is registered in the callback queue, and so:
-         - it cannot run until the current execution is finished; and
-         - once pulled from the queue and run, nothing else can run
-           until it finishes.
-*/ 
+ *     Demo of how threads are not the same as promises, along with
+ *     how to create promises.
+ * 
+ *     Technically you can get true concurrency in JavaScript, but 
+ *     doing so is fairly advanced and we aren't covering it. 
+ *     (If you're curious, look up, e.g., "web workers".)
+ *
+ *     Ordinary JavaScript (and thus TypeScript) has only one thread. 
+ *     Promises don't create new threads; they enable asynchonous 
+ *     execution. The computation that runs when the promise resolves 
+ *     is registered in the callback queue, and so:
+ *       - it cannot run until the current execution is finished; and
+ *       - once pulled from the queue and run, nothing else can run
+ *         until it finishes.
+ */ 
 function notThreadsDemo() {
   console.log('starting demo')
   
