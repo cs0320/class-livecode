@@ -21,8 +21,24 @@ export function pattern(guess: string[]): boolean {
 
 
 export default function Puzzle() {
+  // NO
+  //let guesses: number = 0
+  const [guesses, setGuesses] = useState(0)
   return (
-    <div className="App"> 
+    <div className="Puzzle"> 
+    {guesses}
+    <button onClick={() => { 
+        // NO! React won't see that you've made the change.
+        //guesses = guesses + 1
+        // YES! (But note "guesses" won't be updated yet, so
+        //   this double-call fails
+        // setGuesses(guesses + 1)
+        // setGuesses(guesses + 1)
+        // Alternative: pass an anonymous function. This works.
+        setGuesses(g => g + 1)
+        setGuesses(g => g + 1)
+        console.log(guesses)
+      }}></button>
     </div>
   );
 }
