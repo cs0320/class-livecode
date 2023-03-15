@@ -10,11 +10,11 @@ import {within} from '@testing-library/dom'
 // Lets us use 'toBeInTheDocument()' 
 import '@testing-library/jest-dom'
 
-test('renders guess button', () => {
+// Why `async`? Suggested by RTL. Essentially, it allows the test function to 
+// more easily use asynchrony (e.g. waiting for components to render), and the 
+// testing library auto-handles the promise for us.
+test('renders guess button', async () => {
   render(<Puzzle />);
-  // case insensitive regex:
-  //const buttonElement = screen.getByText(/Try it!/i);
-  // Better, less brittle:
   const buttonElement = screen.getByText(new RegExp(TEXT_try_button_text));  
   expect(buttonElement).toBeInTheDocument();
   // That's not very selective, though. We'll do better in the next test.
@@ -26,9 +26,9 @@ test('renders guess button', () => {
 // let's ask ourselves something. We've got 3 input boxes on the page. Shouldn't we 
 // provide some annotations to help (say) screenreaders disambiguate them without
 // relying on relative positioning? 
-test('renders guess input fields', () => {
+test('renders guess input fields', async () => {
     render(<Puzzle />);    
-    // ...not this way:
+    // ...NOT this way:
     //const textboxElements = screen.getAllByRole("textbox")    
     // Instead, leverage accessibility tags we ought to be providing anyway
     // https://testing-library.com/docs/queries/byrole/
@@ -42,7 +42,7 @@ test('renders guess input fields', () => {
 
 // Note this is a "wide" test, because it actually clicks a button and inspects the result.
 // (RTL makes this much easier, and using accessibility metadata well helps too.)
-test('entering correct guess', () => {
+test('entering correct guess', async () => {
     render(<Puzzle />);    // Don't forget this :-) 
 
     const guess0 = screen.getByRole("textbox", {name: TEXT_number_1_accessible_name})    
@@ -69,7 +69,7 @@ test('entering correct guess', () => {
     expect(incorrectBlock).toBeNull()
 });
 
-test('entering incorrect guess (same values)', () => {
+test('entering incorrect guess (same values)', async () => {
     render(<Puzzle />);    // Don't forget this :-) 
 
     const guess0 = screen.getByRole("textbox", {name: TEXT_number_1_accessible_name})    
@@ -106,7 +106,7 @@ test('entering incorrect guess (same values)', () => {
        answered in comments above the imports
 */
 
-test('create a promise from a value, way 1', () => {
+test('create a promise from a value, way 1', async () => {
   // Create a promise to return 'happy tuesday!'
   const myString: string = 'happy tuesday!'
   const myPromise: Promise<string> = new Promise( (resolve) => {resolve(myString)})
@@ -115,7 +115,7 @@ test('create a promise from a value, way 1', () => {
   return myPromise.then(s => expect(s).toBe(myString))
 })
 
-test('create a promise from a value, way 2', () => {
+test('create a promise from a value, way 2', async () => {
   // Create a promise to return 'happy tuesday!'
   const myString: string = 'happy tuesday!'
   const myPromise: Promise<string> = Promise.resolve(myString)
@@ -124,7 +124,7 @@ test('create a promise from a value, way 2', () => {
   return myPromise.then(s => expect(s).toBe(myString))
 })
 
-test('check that the text fields are within the fieldset', () => {
+test('check that the text fields are within the fieldset', async () => {
   render(<Puzzle />);    // Don't forget this :-) 
 
   const fieldSet = screen.getByRole(/.*/, {name: 'Enter a 3-number sequence:'})  
