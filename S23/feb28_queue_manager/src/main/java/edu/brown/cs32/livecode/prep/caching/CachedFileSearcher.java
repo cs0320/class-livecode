@@ -26,6 +26,7 @@ public class CachedFileSearcher implements Searcher {
                         new CacheLoader<String, List<String>>() {
                             @Override
                             public List<String> load(String key)  {
+                                System.out.println("called load for: "+key);
                                 // If this isn't yet present in the cache, load it:
                                 return wrappedSearcher.searchLines(key);
                             }
