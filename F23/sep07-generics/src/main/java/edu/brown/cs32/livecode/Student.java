@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Student {
-    List<String> todos;
+public class Student<T> {
+    List<T> todos;
 
-    public Student(List<String> todos) {
+    public Student(List<T> todos) {
         this.todos = todos;
     }
 
@@ -17,15 +17,18 @@ public class Student {
      *
      * @return the most common TODO item
      */
-    public String mostCommonTodoItem() {
-        Map<String, Integer> counts = new HashMap<>();
-        for(String s : this.todos) {
+    public T mostCommonTodoItem() {
+        if(this.todos.isEmpty()) {
+            throw new IllegalStateException("nothing in todo list");
+        }
+        Map<T, Integer> counts = new HashMap<>();
+        for(T s : this.todos) {
             if(!counts.containsKey(s)) counts.put(s, 1);
             else counts.put(s, counts.get(s) + 1);
         }
-        String mostCommonItem = null;
+        T mostCommonItem = null;
         int howCommon = 0;
-        for(String s : counts.keySet()) {
+        for(T s : counts.keySet()) {
             if(counts.get(s) > howCommon) {
                 mostCommonItem = s;
                 howCommon = counts.get(s);
@@ -33,5 +36,4 @@ public class Student {
         }
         return mostCommonItem;
     }
-
 }

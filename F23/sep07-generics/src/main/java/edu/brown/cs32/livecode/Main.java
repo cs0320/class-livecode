@@ -7,9 +7,10 @@ import java.util.List;
  */
 public class Main {
     public static void main(String[] args) {
-        Student tim = new Student(
+        Student<String> tim = new Student<>(
                 List.of("lecture notes", "email", "email", "family", "email"));
         String common = tim.mostCommonTodoItem();
         System.out.println(common);
+        String x = null;
     }
 }
