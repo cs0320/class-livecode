@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 // Because assertEquals is static, and we want to avoid having to write Assert.assertEquals:
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 //  Remember to include "Test" in the class name for a test class, otherwise the tests might not be detected.
 public class TestStudent {
@@ -27,19 +27,24 @@ public class TestStudent {
 
     @Test
     public void oneObvious() {
-        Student student = new Student(List.of("lecture notes", "email", "email", "family", "email"));
+        Student<String> student = new Student<>(List.of("lecture notes", "email", "email", "family", "email"));
         assertEquals("email", student.mostCommonTodoItem());
     }
     @Test
     public void oneTwoThree() {
-        Student student = new Student(List.of("lecture notes", "email", "email", "family", "family", "family"));
+        Student<String> student = new Student<>(List.of("lecture notes", "email", "email", "family", "family", "family"));
         assertEquals("family", student.mostCommonTodoItem());
     }
     @Test
     public void emptyList() {
-        Student student = new Student(List.of());
+        Student<String> student = new Student<>(List.of());
         // Is this _really_ the behavior we want? Should we be testing == null?
-        assertNull(student.mostCommonTodoItem());
+        // assertNull(student.mostCommonTodoItem()); // not anymore!
+
+        // Instead, does this anonymous function produce that exception when run?
+        assertThrows(IllegalStateException.class, () -> {
+            student.mostCommonTodoItem();
+        });
     }
 
 }
