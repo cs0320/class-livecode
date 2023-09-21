@@ -25,7 +25,7 @@ public class NWSAPIWeatherSource implements WeatherDatasource {
             HttpURLConnection clientConnection = connect(requestURL);
             Moshi moshi = new Moshi.Builder().build();
             JsonAdapter<GridResponse> adapter = moshi.adapter(GridResponse.class).nonNull();
-            // NOTE: important. New pattern for routing the input stream vs. how Gson worked.
+            // NOTE: important! pattern for handling the input stream
             GridResponse body = adapter.fromJson(new Buffer().readFrom(clientConnection.getInputStream()));
             clientConnection.disconnect();
             if(body == null || body.properties() == null || body.properties().gridId() == null)
@@ -69,11 +69,12 @@ public class NWSAPIWeatherSource implements WeatherDatasource {
             lat = Math.floor(lat * 10000.0) / 10000.0;
             lon = Math.floor(lon * 10000.0) / 10000.0;
 
+            System.out.println("Debug: getCurrentWeather: "+lat+";"+lon);
             GridResponse gridResponse = resolveGridCoordinates(lat, lon);
             String gid = gridResponse.properties().gridId();
             String gx = gridResponse.properties().gridX();
             String gy = gridResponse.properties().gridY();
-
+            System.out.println("Debug: gridResponse: "+gid+";"+gx+";"+gy);
             URL requestURL = new URL("https", "api.weather.gov", "/gridpoints/"+gid+"/"+gx+","+gy);
             HttpURLConnection clientConnection = connect(requestURL);
             Moshi moshi = new Moshi.Builder().build();
