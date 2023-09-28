@@ -28,16 +28,22 @@ public class WeatherHandler implements Route {
 
     @Override
     public Object handle(Request request, Response response) {
-        // Get the location that the request is for
-        String lat = request.queryParams("lat");
-        String lon = request.queryParams("lon");
-
         // Prepare to send a reply
         Moshi moshi = new Moshi.Builder().build();
         Type mapStringObject = Types.newParameterizedType(Map.class, String.class, Object.class);
         JsonAdapter<Map<String, Object>> adapter = moshi.adapter(mapStringObject);
         JsonAdapter<WeatherData> weatherDataAdapter = moshi.adapter(WeatherData.class);
         Map<String, Object> responseMap = new HashMap<>();
+
+        // Get the location that the request is for
+        String lat = request.queryParams("lat");
+        String lon = request.queryParams("lon");
+        if(lat == null || lon == null) {
+            responseMap.put("type", "error");
+            responseMap.put("error_type", "missing_parameter");
+            responseMap.put("error_arg", lat == null ? "lat" : "lon");
+            return adapter.toJson(responseMap);
+        }
 
         // Generate the reply
         try {
