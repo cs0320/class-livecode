@@ -1,3 +1,6 @@
+// Demo of how to use RTL to component-test. We'll use Playwright instead,
+//  but I'm leaving this in the livecode for reference. 
+
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';

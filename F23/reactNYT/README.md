@@ -9,6 +9,18 @@ To run: `npm install` and then `npm run start`.
 
 I've taken notes on building this example over the past couple of semesters.
 
+## Notes on Files 
+
+I've put each React component into its own file, often with a corresponding interface that defines what props the component expects. The nesting of components is roughly:
+
+- `index.html` (99 percent boilerplate)
+  - `index.tsx` (99 percent boilerplate)
+    - `App.tsx` (the top-level application component)
+      - `Puzzle.tsx` (the puzzle itself)
+        - `OldRound.tsx` (one of these for each previous round of the puzzle)
+        - `NewRound.tsx` (one of these for entering a new round)
+          - `ControlledInput.tsx` (used so React can manage the state of the input box)
+  
 ## Notes on React 
 
 ### Typing props

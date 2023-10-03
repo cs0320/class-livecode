@@ -2,6 +2,11 @@ import React from 'react';
 import Puzzle from './Puzzle'
 import './App.css';
 
+/**
+ * Top-level application component. Shows the question prompt, and then
+ * loads the Puzzle component within it.
+ * @returns JSX for the App component
+ */
 function App() {
   return (
     <div className="App">
