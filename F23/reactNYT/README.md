@@ -26,6 +26,8 @@ I've put each React component into its own file, often with a corresponding inte
 
 See [README.tests.md](./README.tests.md). The tests that I wrote for this example are all in [tests/app.spec.ts](./tests/app.spec.ts).
 
+You may need to run `npx playwright install` if you haven't yet. This downloads browser information, etc.
+
 ## Notes on React 
 
 ### Typing props

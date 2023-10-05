@@ -15,3 +15,4 @@ export function pattern(guess: string[]): boolean {
   if(parseInt(guess[1]) >= parseInt(guess[2])) return false;
   return true;
 }
+

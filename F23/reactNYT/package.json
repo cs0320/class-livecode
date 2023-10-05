@@ -19,7 +19,8 @@
     "serve": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "test": "jest"
+    "test": "jest src/",
+    "e2e": "npx playwright test"
   },
   "eslintConfig": {
     "extends": [
