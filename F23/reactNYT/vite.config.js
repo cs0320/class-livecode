@@ -8,5 +8,9 @@ export default defineConfig(() => {
       outDir: 'build',
     },
     plugins: [react()],
+    // Development server port (same as gearup)
+    server: {
+      port: 8000,
+    },
   };
 });

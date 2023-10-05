@@ -4,6 +4,7 @@ This webapp uses:
 * TypeScript
 * React
 * Vite
+* Playwright (for end-to-end testing)
 
 To run: `npm install` and then `npm run start`.
 
@@ -21,6 +22,10 @@ I've put each React component into its own file, often with a corresponding inte
         - `NewRound.tsx` (one of these for entering a new round)
           - `ControlledInput.tsx` (used so React can manage the state of the input box)
   
+## Notes on Playwright
+
+See [README.tests.md](./README.tests.md). The tests that I wrote for this example are all in [tests/app.spec.ts](./tests/app.spec.ts).
+
 ## Notes on React 
 
 ### Typing props
