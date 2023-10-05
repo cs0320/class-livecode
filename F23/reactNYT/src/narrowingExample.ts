@@ -21,3 +21,21 @@ function exampleNarrowingByField(person: Person) {
     }
 }
 exampleNarrowingByField(nim)
+
+// Another: TypeScript has union types...
+function exampleNarrowingUnion(value: string | string[]): string {
+    //return value // no! we don't know if it's a string yet
+    if(typeof(value) == "string") return value
+    // Notice that after this point, the type of value is an array
+    const result = value[0] 
+    // But the type of result is string, even though undefined is possible
+    return result
+}
+console.log(exampleNarrowingUnion("hello"))
+console.log(exampleNarrowingUnion(["hello", "world"]))
+// The type system doesn't *completely* protect us...
+// This is an ergonomic *CHOICE* for the default, to avoid 
+// flooding programmers with errors. To turn on this check, 
+// add this to tsconfig.json: 
+//   "noUncheckedIndexedAccess": true
+console.log(exampleNarrowingUnion([]))
