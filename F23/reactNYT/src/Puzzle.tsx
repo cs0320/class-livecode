@@ -20,12 +20,20 @@ export default function Puzzle() {
   //   * some number of old rounds, displayed one after another
   //   * one new round, which needs to know how to update the state
   return (
-    <div className="App">  
-      {/* Add an OldRound for every element of guesses */} 
-      { guesses.map( (guess,guessNumber) => 
-        <OldRound           
+    <div className="Puzzle">  
+      {/* Add an OldRound for every element of guesses 
+          I added the console.log so you can see the guessNumber growing 
+          based on questions on Oct 5 2023. Notice that anonymous functions 
+          don't need braces or explicit return statements if they don't need 
+          multiple lines... Here, I now needed to add braces, and an explicit 
+          return statement! */} 
+      { guesses.map( (guess,guessNumber) => {
+        // This will go to the JS console in the browser
+        console.log(`In the guesses.map; guessNumber=${guessNumber}`)
+        return (<OldRound           
           guess={guess}
-          key={guessNumber} />)}
+          key={guessNumber} />)
+        })}
 
       {/* Add a single NewRound. Rather than passing in the full setter
           setGuesses, we'll instead pass a more restrictive function. 
