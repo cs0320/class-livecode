@@ -2,6 +2,11 @@ import React, { useState, Dispatch, SetStateAction } from 'react';
 import { ControlledInput } from './ControlledInput';
 import { TEXT_number_1_accessible_name, TEXT_number_2_accessible_name, TEXT_number_3_accessible_name, TEXT_try_button_accessible_name, TEXT_try_button_text } from './constants';
 
+/**
+ * TypeScript has done something odd here. The type of a _function_ needs to say what arguments it 
+ * takes and what it returns. But in TypeScript syntax, we also need to give a name to the arguments. 
+ * (This name doesn't have to be the same as in the actual functions.)
+ */
 export interface NewRoundProps {
     addGuess: (guess: string[]) => any,
     setNotification: Dispatch<SetStateAction<string>>
