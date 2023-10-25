@@ -19,17 +19,20 @@ export const load: REPLFunction = (args: Array<string>) => {
     .then((response: Response) => response.json())
     .then((responseObject) => {
       if (!isSuccessfulLoad(responseObject)) {
-        const errorArray = [
+        //const errorArray: [string[], string[][]] = [
+          const errorArray = [
           [],
           [["data not successully loaded"]],
         ];
         return errorArray;
       } else {
         const result = responseObject.properties.result;
+        //const resultArray: [string[], string[][]] = [[], [[result]]];
         const resultArray = [[], [[result]]];
         return resultArray;
       }
     })
+    // source of void:
   .catch((problem) => console.log(problem)); 
 };
 

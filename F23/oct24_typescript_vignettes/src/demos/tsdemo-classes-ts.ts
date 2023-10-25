@@ -6,11 +6,17 @@ export interface REPLFunction {
     (args: Array<string>): Promise<string>;    
 }
 
+/*export interface REPLCommandObject {
+  execute: (args: Array<string>) => Promise<string>;    
+}*/
+
+
 /**
  * Example taken from office hours. 
  * Thanks to the student who volunteered this!
  */
 class Search implements REPLFunction {
+//class Search implements REPLCommandObject {
   async execute(args: string[]): Promise<string> {
     const response = await fetch(
       "http://localhost:3000/search?searchTerm=" +
