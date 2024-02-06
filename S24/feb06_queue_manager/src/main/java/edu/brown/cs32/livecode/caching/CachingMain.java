@@ -14,8 +14,11 @@ public class CachingMain {
 
     public static void main(String[] args) {
         try {
-            demo();
-           // cachedDemo();
+            // run without cache
+            demo(new FileSearcher("src/main/resources/frankenstein.txt"));
+            // run with cache
+            demo(new CachedFileSearcher(new FileSearcher("src/main/resources/frankenstein.txt")));
+
         } catch (FileNotFoundException e) {
             System.out.println("File not found.");
         } catch(IOException e) {
@@ -24,14 +27,11 @@ public class CachingMain {
     }
 
     /**
-     * Use unproxied FileSearcher to search *twice*
-     * @throws IOException
+     * Search for "love" in the book text, and then *again*
+     * Can we avoid doing the work twice?
+     * @throws IOException if there is trouble reading the file
      */
-    static void demo() throws IOException {
-        // Note that FileSearcher is not generic, so we don't add any <>
-        // The interface, however, is generic and takes 2 type arguments.
-        Searcher<String,String> fs = new FileSearcher("src/main/resources/frankenstein.txt");
-
+    static void demo(Searcher<String,String> fs) throws IOException {
         // Search once
         for(String line : fs.search("love")) {
             System.out.println(line);
@@ -40,15 +40,4 @@ public class CachingMain {
         System.out.println(fs.search("love").size());
     }
 
-    static void cachedDemo() throws IOException {
-        // CachedFileServer is also not generic, so no <>
-        Searcher<String,String> fs = new CachedFileSearcher(new FileSearcher("src/main/resources/frankenstein.txt"));
-
-        // Search once
-        for(String line : fs.search("love")) {
-            System.out.println(line);
-        }
-        // Search twice
-        System.out.println(fs.search("love").size());
-    }
 }

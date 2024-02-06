@@ -18,6 +18,18 @@ import java.util.concurrent.TimeUnit;
 public class CachedFileSearcher implements Searcher<String,String> {
     private final Searcher<String,String> wrappedSearcher;
     private final LoadingCache<String, Collection<String>> cache;
+
+    /**
+     * Proxy class: wrap an instance of Searcher (of any kind) and cache
+     * its results.
+     *
+     * There are _many_ ways to implement this! We could use a plain
+     * HashMap, but then we'd have to handle "eviction" ourselves.
+     * Lots of libraries exist. We're using Guava here, to demo the
+     * strategy pattern.
+     *
+     * @param toWrap the Searcher to wrap
+     */
     public CachedFileSearcher(Searcher<String,String> toWrap) {
         this.wrappedSearcher = toWrap;
 
