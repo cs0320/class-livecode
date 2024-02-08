@@ -22,6 +22,8 @@ public class NWSAPIWeatherSource implements WeatherDatasource {
             URL requestURL = new URL("https", "api.weather.gov", "/points/"+lat+","+lon);
             HttpURLConnection clientConnection = connect(requestURL);
             Moshi moshi = new Moshi.Builder().build();
+
+            // NOTE WELL: THE TYPES GIVEN HERE WOULD VARY ANYTIME THE RESPONSE TYPE VARIES
             JsonAdapter<GridResponse> adapter = moshi.adapter(GridResponse.class).nonNull();
             // NOTE: important! pattern for handling the input stream
             GridResponse body = adapter.fromJson(new Buffer().readFrom(clientConnection.getInputStream()));
@@ -87,6 +89,8 @@ public class NWSAPIWeatherSource implements WeatherDatasource {
             URL requestURL = new URL("https", "api.weather.gov", "/gridpoints/"+gid+"/"+gx+","+gy);
             HttpURLConnection clientConnection = connect(requestURL);
             Moshi moshi = new Moshi.Builder().build();
+
+            // NOTE WELL: THE TYPES GIVEN HERE WOULD VARY ANYTIME THE RESPONSE TYPE VARIES
             JsonAdapter<ForecastResponse> adapter = moshi.adapter(ForecastResponse.class).nonNull();
 
             ForecastResponse body = adapter.fromJson(new Buffer().readFrom(clientConnection.getInputStream()));

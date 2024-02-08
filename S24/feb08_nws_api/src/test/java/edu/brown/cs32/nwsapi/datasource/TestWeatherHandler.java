@@ -49,6 +49,9 @@ public class TestWeatherHandler {
     }
 
     // Helping Moshi serialize Json responses; see the gearup for more info.
+    // NOTE WELL: THE TYPES GIVEN HERE WOULD VARY ANYTIME THE RESPONSE TYPE VARIES
+    // We are testing an API that returns Map<String, Object>
+    // It would be different if the response was, e.g., List<List<String>>.
     private final Type mapStringObject = Types.newParameterizedType(Map.class, String.class, Object.class);
     private JsonAdapter<Map<String, Object>> adapter;
     private JsonAdapter<WeatherData> weatherDataAdapter;

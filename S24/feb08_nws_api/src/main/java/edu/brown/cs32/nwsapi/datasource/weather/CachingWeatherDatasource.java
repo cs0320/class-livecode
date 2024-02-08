@@ -2,6 +2,8 @@ package edu.brown.cs32.nwsapi.datasource.weather;
 
 import edu.brown.cs32.nwsapi.datasource.DatasourceException;
 
+import java.util.List;
+
 /**
  * Proxy wrapper for a WeatherDatasource that caches its response
  * for efficiency. NOT FULLY IMPLEMENTED! But this shape should be useful
@@ -18,6 +20,7 @@ public class CachingWeatherDatasource implements WeatherDatasource {
     @Override
     public WeatherData getCurrentWeather(Geolocation loc) throws DatasourceException, IllegalArgumentException {
         throw new UnsupportedOperationException();
+
 
         // If this were implemented, we'd do something similar to the
         // caching livecode from last time.
