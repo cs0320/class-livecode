@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Note on Maven version: 3.8.6 is latest as of June 28, '22 -->
+
+    <groupId>edu.brown.cs32</groupId>
+    <artifactId>fall22</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <build>
+        <!-- Maven looks in src/main/resources by default.
+             Add data to that, since it has our shared datafiles.
+             Also the *test* resources folder, where we have a custom
+             Log4J configuration. -->
+        <resources>
+            <resource>
+                <directory>data</directory>
+            </resource>
+            <resource>
+                <directory>src/test/resources</directory>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.1</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+
+            <!-- Static analysis plugin that will find many bugs that Java's
+              type checking will not. Not everything it finds is a real bug, and
+              sometimes you'll want to tell Spotbugs to ignore a particular thing.
+              But still incredibly useful for saving time.
+
+              One way the tool is especially valuable: prompting you about threats
+              you weren't considering. For me, this was text encoding. I had originally
+              used the FileReader(filename) constructor, which uses the system's default
+              encoding. But that's dangerous:
+                - it keeps me from having to think about needing tests on files that use other encodings!
+                - it may make results inconsistent across different platforms.
+
+              Can also use the IntelliJ plugin, but may not be as up to date.
+              Plugin can be seen via View -> Tool Windows -> Spotbugs
+
+              -->
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>4.6.0.0</version>
+                <dependencies>
+                    <!-- overwrite dependency on spotbugs if you want to specify the version of spotbugs -->
+                    <dependency>
+                        <groupId>com.github.spotbugs</groupId>
+                        <artifactId>spotbugs</artifactId>
+                        <version>4.7.0</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <!-- Test coverage plugin for Maven
+            mvn help:describe -Dplugin=org.jacoco:jacoco-maven-plugin -Ddetail
+
+            To run check, use mvn clean verify
+               (because check defaults to running in the verify phase)
+
+            To run report, you can just use mvn test (or mvn jacoco:report)
+            Open the report in target/site/jacoco/index.html
+            Click through to see exact lines that were not covered by tests.
+            -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.8</version>
+                <!-- ...and here's how it should run... -->
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <!-- run during Maven's test phase -->
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>check</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+
+                        <configuration>
+                            <rules>
+                                <rule>
+                                    <!-- combine all packages for this metric -->
+                                    <element>BUNDLE</element>
+                                    <limits>
+                                        <limit>
+                                            <!-- require 50% line coverage -->
+                                            <counter>LINE</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.50</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                        </configuration>
+
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Maven + JUnit5 interoperability -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+            </plugin>
+        </plugins>
+
+    </build>
+
+    <!--
+      Don't over-complicate things by trying to add SpotBugs' Maven plugin.
+      Instead, just use from IntelliJ plugin.
+      https://plugins.jetbrains.com/plugin/14014-spotbugs
+    -->
+
+    <!-- Modules that the project itself depends on -->
+    <dependencies>
+
+        <!--
+            jopt-simple is a command line parser.
+            https://pholser.github.io/jopt-simple/.
+        -->
+        <dependency>
+            <groupId>net.sf.jopt-simple</groupId>
+            <artifactId>jopt-simple</artifactId>
+            <version>6.0-alpha-3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--
+       Simple Logging Facade for Java
+       This isn't a "logging tool" exactly, but rather a facade that
+       allows the end-user to switch to their preferred logging
+       infrastructure. Spark uses it.
+       https://www.slf4j.org/.
+       -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.0-alpha1</version>
+        </dependency>
+
+        <!-- Use the JDK's logger with SLF4J
+           (We don't use Log4J. If using Log4J, need to
+           update version so as to void the max-severity vuln) -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <version>2.0.0-alpha1</version>
+        </dependency>
+
+        <!--
+            Google Guava is a useful library. It's not just collections;
+            it also contains concurrency and caching utilities, among many
+            other useful things.
+            https://github.com/google/guava.
+        -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>31.1-jre</version>
+        </dependency>
+
+        <!--
+            We've switched to using Moshi for serialization/deserialization of JSON.
+            https://github.com/square/moshi
+            We used to use Gson, but Gson isn't being maintained actively anymore,
+            and doesn't interact well with records. The developer who switched
+            from Gson to Moshi has added remarks (e.g., consistent exception use).
+
+            Moshi 1.13.0 was released in December, 2021
+
+            We'll also use Moshi's adapters package, which includes pre-built adapters
+            for quite a few things, including polymorphic adapters.
+
+            The adapters README.md includes a "latest.version" version; replaced with
+            latest version as of August 2022.
+        -->
+
+        <dependency>
+            <groupId>com.squareup.moshi</groupId>
+            <artifactId>moshi</artifactId>
+            <version>1.13.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.moshi</groupId>
+            <artifactId>moshi-adapters</artifactId>
+            <version>1.13.0</version>
+        </dependency>
+
+        <!--
+            Spark is a web framework for java. We'll use it for implementing
+            web APIs in Java.
+            http://sparkjava.com/.
+        -->
+        <dependency>
+            <groupId>com.sparkjava</groupId>
+            <artifactId>spark-core</artifactId>
+            <version>2.9.3</version>
+        </dependency>
+    </dependencies>
+    <properties>
+
+        <!-- Use UTF-8 text encoding -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Using latest LTS version (17) -->
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
+
+</project>
