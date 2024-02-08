@@ -126,6 +126,9 @@ public class TestWeatherHandler {
         assertEquals(
                 weatherDataAdapter.toJson(new WeatherData(20.0)),
                 responseBody.get("temperature"));
+        // Notice we had to do something strange above, because the map is
+        // from String to *Object*. Awkward testing caused by poor API design...
+
         loadConnection.disconnect();
     }
 

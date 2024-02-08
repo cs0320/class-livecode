@@ -17,27 +17,37 @@ public class TestWeatherSource {
 
     @BeforeEach
     public void setup() {
+        // No setup needed
     }
 
     @AfterEach
     public void tearDown() {
+        // No teardown needed
     }
 
     /**
      * This method tests the _real_ API datasource. It's good to have one such
-     * test, but we strongly suggest mocking all others when possible. That way,
-     * you aren't spamming the NWS with API requests whenever your tests run.
+     * test, but we strongly suggest mocking when possible in *integration* testing.
+     * That way, you aren't spamming the NWS with API requests whenever your tests run.
      * @throws DatasourceException
      */
     @Test
     public void testProvidenceWeatherCanLoad_REAL() throws DatasourceException {
         WeatherDatasource source = new NWSAPIWeatherSource();
-        Geolocation loc = new Geolocation(41.8240,-71.4128);
+        Geolocation loc = new Geolocation(41.8240,-71.4128); // Providence
         WeatherData res = source.getCurrentWeather(loc);
 
         assertNotNull(res);
 
-        // ... surely, there are other properties worth checking...
+        System.out.println(res.temp_C());
+
+        // But this is _live data_! So we can't check the temperature is an exact value.
+        // We should at least check the temperature is in a reasonable range. But be
+        // tolerant of variation...
+        // Absolute zero is −273.15 C
+        assertTrue(res.temp_C() > -273.16);
+        // Average surface temperature of Venus is around 460 C, IIRC
+        assertTrue(res.temp_C() < 460);
     }
 
 
