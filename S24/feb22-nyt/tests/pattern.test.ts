@@ -1,4 +1,6 @@
-import { pattern } from './pattern'
+import { test, expect } from '@playwright/test';
+
+import { pattern } from '../src/pattern'
 
 test('pattern false if all empty', () => {
     const input = ['','','']
