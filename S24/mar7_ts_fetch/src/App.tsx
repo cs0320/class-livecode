@@ -21,7 +21,9 @@ export default App
 /** 
  * Interface to represent "grid" responses from NWS.
  * 
- * We don't care about other fields; we can just leave them out 
+ * We don't care about other fields; we can just leave them out! 
+ * We'll use this interface for type-checking, but we don't get 
+ * it applied automatically -- see below.
  */
 interface NWSGridResponse {
   properties: NWSGridResponseProperties    
@@ -75,30 +77,30 @@ export function printGridInfo() {
   /* 
     Try #4
   */
-  fetch(url)
-     .then((response: Response) => response.json()) 
-     // This is no help, because of how `any` works in TS:
-     //.then((responseObject: NWSGridResponse) => {
-    .then((responseObject) => {
-        // Beware, **STILL**:
-        // The type system isn't giving us protection here---response.json()
-        // produces a Promise<any>, so TS is happy to trust the type declared
-        // or inferred. The type annotation on the input variable is no help. 
+  // fetch(url)
+  //    .then((response: Response) => response.json()) 
+  //    // This is no help, because of how `any` works in TS:
+  //    //.then((responseObject: NWSGridResponse) => {
+  //   .then((responseObject) => {
+  //       // Beware, **STILL**:
+  //       // The type system isn't giving us protection here---response.json()
+  //       // produces a Promise<any>, so TS is happy to trust the type declared
+  //       // or inferred. The type annotation on the input variable is no help. 
 
-        // Instead, check dynamically:          
-        if(!isNWSGridResponse(responseObject)) { 
-          console.log('not a response')
-          console.log(responseObject)
-        } else {
-          // Note: mouseover reports that `responseObject` here is 
-          // an NWSGridResponse. Narrowing has happened, via type predicate.
-          //  (Without the type predicate, this would still be `any`)
-          console.log(responseObject.properties.gridId)
-          console.log(responseObject.properties.gridX)
-          console.log(responseObject.properties.gridY)
-        }
-      })
-      .catch(problem => console.log(problem))
+  //       // Instead, check dynamically:          
+  //       if(!isNWSGridResponse(responseObject)) { 
+  //         console.log('not a response')
+  //         console.log(responseObject)
+  //       } else {
+  //         // Note: mouseover reports that `responseObject` here is 
+  //         // an NWSGridResponse. Narrowing has happened, via type predicate.
+  //         //  (Without the type predicate, this would still be `any`)
+  //         console.log(responseObject.properties.gridId)
+  //         console.log(responseObject.properties.gridX)
+  //         console.log(responseObject.properties.gridY)
+  //       }
+  //     })
+  //     .catch(problem => console.log(problem))
 
 }
 
@@ -137,13 +139,25 @@ function isNWSGridResponseProperties(rjson: any): rjson is NWSGridResponseProper
 *       - once pulled from the queue and run, nothing else can run
 *         until it finishes.
 */ 
+
+// Fibonacci without caching
+function slowComputationFib(n: number, label: string): number {
+  if(n % 2 === 0)  // reduce spam
+    console.log(`${label}: ${n}`)
+  if(n <= 1) return 1
+  return slowComputationFib(n-1, label) + slowComputationFib(n-2, label)
+}
+
 function notThreadsDemo() {
   console.log('starting demo')
+
+  // Let's go a level deeper. We'll use the Promise constructor directly.
 
   // The promise constructor takes a function of two arguments:
   //   - "resolve", which resolves the promise when called
   //   - "reject", which rejects the promise when called
-  const promise = new Promise((resolve, reject) => {    
+  const promise = new Promise((resolve, reject) => { 
+    console.log('inside body of function passed to Promise constructor')   
     // This performs the slow computation and then resolves 
     // the promise with the returned value. But the computation
     // is not delayed---so everything else waits until this finishes.
@@ -153,34 +167,28 @@ function notThreadsDemo() {
     console.log(`promise resolved, in 'then' callback. value=${value}`)
   })
 
-  console.log(`promise created. promise=${promise}`) 
+  console.log(`promise created, value: promise=${promise}`) 
 
-  slowComputationFib(11, 'outside promise')
+  //slowComputationFib(11, 'outside promise')
 
   // If these were separate threads, we'd probably expect to see 
-  //   their execution interleaved, but we don't!
+  //   their execution interleaved, but we don't! The computation
+  // is done right there...
 
   // If we want to delay the execution of the promise function itself,
-  // we can use setTimeout to queue it:
-  new Promise((resolve, reject) => {
-    console.log('inside promise (2nd) function, but outside timeout')
-    setTimeout( () => {      
-      resolve(slowComputationFib(12, 'from inside promise (2nd) and resolve'))
-    }) 
-  })
-  .then(value => {
-    console.log(`promise (2nd) resolved, in 'then' callback. value=${value}`)
-  })
+  // we can use setTimeout to queue it (although this isn't how, e.g., 
+  // fetch works! but it suffices for the demo)
+  // new Promise((resolve, reject) => {
+  //   console.log('inside promise (2nd) function, but outside timeout')
+  //   setTimeout( () => {      
+  //     resolve(slowComputationFib(12, 'from inside promise (2nd) and resolve'))
+  //   }) 
+  // })
+  // .then(value => {
+  //   console.log(`promise (2nd) resolved, in 'then' callback. value=${value}`)
+  // })
 
-  console.log('main function done')
+  // console.log('main function done')
 
-}
-
-// Fibonacci without caching
-function slowComputationFib(n: number, label: string): number {
-  if(n % 2 === 0)  // reduce spam
-    console.log(`${label}: ${n}`)
-  if(n <= 1) return 1
-  return slowComputationFib(n-1, label) + slowComputationFib(n-2, label)
 }
 
