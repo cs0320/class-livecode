@@ -43,7 +43,8 @@ interface NWSGridResponseProperties {
 export function printGridInfo() {    
   const lat: number = 39.7456
   const lon: number = -97.0892
-  const url: string = `https://api.weather.gov/points/${lat},${lon}`
+  const url: string = 
+    `https://api.weather.gov/points/${lat},${lon}`
   console.log(`Requesting: ${url}`)
 
   /* 
@@ -58,7 +59,8 @@ export function printGridInfo() {
   */
     // const fetched: Promise<Response> = fetch(url)
     // fetched.then(
-    //   (response: Response) => console.log(response)) 
+    //   (response: Response) => console.log(response))
+       
 
 
 
@@ -77,30 +79,30 @@ export function printGridInfo() {
   /* 
     Try #4
   */
-  // fetch(url)
-  //    .then((response: Response) => response.json()) 
-  //    // This is no help, because of how `any` works in TS:
-  //    //.then((responseObject: NWSGridResponse) => {
-  //   .then((responseObject) => {
-  //       // Beware, **STILL**:
-  //       // The type system isn't giving us protection here---response.json()
-  //       // produces a Promise<any>, so TS is happy to trust the type declared
-  //       // or inferred. The type annotation on the input variable is no help. 
+  fetch(url)
+     .then((response: Response) => response.json()) 
+     // This is no help, because of how `any` works in TS:
+     //.then((responseObject: NWSGridResponse) => {
+    .then((responseObject) => {
+        // Beware, **STILL**:
+        // The type system isn't giving us protection here---response.json()
+        // produces a Promise<any>, so TS is happy to trust the type declared
+        // or inferred. The type annotation on the input variable is no help. 
 
-  //       // Instead, check dynamically:          
-  //       if(!isNWSGridResponse(responseObject)) { 
-  //         console.log('not a response')
-  //         console.log(responseObject)
-  //       } else {
-  //         // Note: mouseover reports that `responseObject` here is 
-  //         // an NWSGridResponse. Narrowing has happened, via type predicate.
-  //         //  (Without the type predicate, this would still be `any`)
-  //         console.log(responseObject.properties.gridId)
-  //         console.log(responseObject.properties.gridX)
-  //         console.log(responseObject.properties.gridY)
-  //       }
-  //     })
-  //     .catch(problem => console.log(problem))
+        // Instead, check dynamically:          
+        if(!isNWSGridResponse(responseObject)) { 
+          console.log('not a response')
+          console.log(responseObject)
+        } else {
+          // Note: mouseover reports that `responseObject` here is 
+          // an NWSGridResponse. Narrowing has happened, via type predicate.
+          //  (Without the type predicate, this would still be `any`)
+          console.log(responseObject.properties.gridId)
+          console.log(responseObject.properties.gridX)
+          console.log(responseObject.properties.gridY)
+        }
+      })
+      .catch(problem => console.log(problem))
 
 }
 
@@ -108,7 +110,8 @@ export function printGridInfo() {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isNWSGridResponse(rjson: any): rjson is NWSGridResponse {    
   if(!('properties' in rjson)) return false
-  if(!isNWSGridResponseProperties(rjson['properties'])) return false
+  if(!isNWSGridResponseProperties(rjson['properties'])) 
+    return false
   return true
 }
 

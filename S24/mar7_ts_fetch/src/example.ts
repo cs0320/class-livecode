@@ -6,6 +6,7 @@ function sayHello(){
     let toReturn = 0
     setTimeout(() => {
         toReturn = 500
+        console.log('ran first callback');
     }, 0)
     setTimeout(() => {
         toReturn = 100
