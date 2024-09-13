@@ -21,7 +21,8 @@ public class Main {
                 new Diplomat(Rank.MINISTER, "David"),
                 new Diplomat(Rank.CHARGE_DAFFAIRES, "Ernie"),
                 new Diplomat(Rank.ENVOY, "Francine"),
-                new Diplomat(Rank.NUNCIO, "Gerald")
+                new Diplomat(Rank.NUNCIO, "Gerald"),
+                new Diplomat(null, "James Bond")
         );
         System.out.println("Original: "+ diplomats);
 
@@ -41,6 +42,3 @@ public class Main {
 
     }
 }
-
-
-// new Diplomat(null, "James Bond")

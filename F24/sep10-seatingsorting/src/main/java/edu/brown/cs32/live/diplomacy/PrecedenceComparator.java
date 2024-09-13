@@ -1,7 +1,6 @@
 package edu.brown.cs32.live.diplomacy;
 
 import java.util.Comparator;
-import java.util.Optional;
 
 // Avoid the need to precede ranks with "Diplomat.RANK."
 import edu.brown.cs32.live.diplomacy.Diplomat.Rank;
@@ -57,6 +56,9 @@ public class PrecedenceComparator implements Comparator<Diplomat> {
         // By documentation (see mouseover): Negative if o1 < o2; zero if o1 == o2; positive if o1 > o2
         //   the sign of compare(x,y) must be the same as compare(y,x), and compare must be transitive.
 
+        // new Diplomat(null, "James Bond")
+        // one comparator: this.givePrecedence = null
+        // another: this.givePrecedence = NUNCIO
         if(o1.rank() == this.givePrecedence) return -1;
         if(o2.rank() == this.givePrecedence) return 1;
 

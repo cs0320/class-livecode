@@ -60,13 +60,15 @@ public class TestREPL {
         // To see why this is important, try commenting out one of the commands above!
         assertTrue(mockOut.terminal().ready());
         String out1 = mockOut.terminal().readLine();
+        assertEquals("Hi!", out1);
+
         assertTrue(mockOut.terminal().ready());
         String out2 = mockOut.terminal().readLine();
+        assertEquals("Delightful to meet you, I'm sure.", out2);
+
         assertTrue(mockErr.terminal().ready());
         String err1 = mockErr.terminal().readLine();
-
-        assertEquals("Hi!", out1);
-        assertEquals("Delightful to meet you, I'm sure.", out2);
         assertEquals("ERROR: Invalid command.", err1);
+
     }
 }

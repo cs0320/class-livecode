@@ -21,7 +21,6 @@ public record MockSystemIn(InputStream mockSystemIn, OutputStreamWriter keyboard
         // ...but an *input* stream from the *callee's* perspective. Connect them!
         PipedInputStream in = new PipedInputStream(out);
         OutputStreamWriter keyboard = new OutputStreamWriter(out, UTF_8);
-
         return new MockSystemIn(in, keyboard);
     }
 
