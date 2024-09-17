@@ -18,7 +18,7 @@ import spark.Spark;
 public class Main {
     /** Path where the log will go. Currently just a file in the current working directory. */
     static final String LOG_PATH = "server_log.log";
-    
+
     /** Logger instance that can be used to write to the log file. */
     static final Logger logger;
 
