@@ -14,6 +14,8 @@ import java.util.*;
  *  A datasource for weather forecasts via NWS API. This class uses the _real_
  *  API to return results. It has no caching in itself, and is focused on working
  *  with the real API.
+ *
+ *  The gearup code will give additional help with serializing/deserializing.
  */
 public class NWSAPIWeatherSource implements WeatherDatasource {
 
@@ -24,14 +26,21 @@ public class NWSAPIWeatherSource implements WeatherDatasource {
             Moshi moshi = new Moshi.Builder().build();
 
             // NOTE WELL: THE TYPES GIVEN HERE WOULD VARY ANYTIME THE RESPONSE TYPE VARIES
+            // You need to give two things, here:
+            // (1) the compiler-time generic type for JsonAdapter, in angle brackets
+            // (2) the run-time type object that the adapter can follow when parsing.
             JsonAdapter<GridResponse> adapter = moshi.adapter(GridResponse.class).nonNull();
-            // NOTE: important! pattern for handling the input stream
+
+            // We could probably improve this from a defensive-programming perspective.
             GridResponse body = adapter.fromJson(new Buffer().readFrom(clientConnection.getInputStream()));
             clientConnection.disconnect();
             if(body == null || body.properties() == null || body.properties().gridId() == null)
                 throw new DatasourceException("Malformed response from NWS");
+
             return body;
         } catch(IOException e) {
+            // Why are we catching and re-throwing here? Because the caller won't necessarily be
+            // aware that this is the NWS API source. So they may not be expecting an IOException.
             throw new DatasourceException(e.getMessage());
         }
     }
@@ -113,8 +122,17 @@ public class NWSAPIWeatherSource implements WeatherDatasource {
     }
 
     ////////////////////////////////////////////////////////////////
+    // There are multiple ways to structure data classes for Moshi. This is one I like
+    // when I know I am dealing with nested Json OBJECTS (which group with squiggle-braces "{ ... }")
+    //
     // NWS API data classes. These must be public for Moshi.
-    // They are "inner classes"; NWSAPIDataSource.GridResponse, etc.
+    // They are "inner classes"; refer to them as NWSAPIDataSource.GridResponse, etc.
+    // The key is that the nesting of fields matches the expected nesting of the response string.
+    // E.g., a GridResponse contains properties, which contain ... etc.
+    //
+    // When you are working with the Census in 2.2, instead of the NWS, note that they may be sending
+    // back Json ARRAYS (which group with square-brackets "[ ... ]"). Refer to the gearup for that;
+    // use the nested record approach for Json objects only.
     ////////////////////////////////////////////////////////////////
 
     public record GridResponse(String id, GridResponseProperties properties) { }

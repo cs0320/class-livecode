@@ -12,6 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
  * Notice the difference between this and the TestWeatherHandler class.
  * Here we are testing the specific datasources. In the handler tester,
  * we are testing the integration of those datasources and the handler code.
+ * These are _different_!
+ *
+ * In particular, here we are very concerned about how the real fetching of data functions.
  */
 public class TestWeatherSource {
 
@@ -26,10 +29,9 @@ public class TestWeatherSource {
     }
 
     /**
-     * This method tests the _real_ API datasource. It's good to have one such
+     * This method tests the _real_ API datasource. It's good to have at least one such
      * test, but we strongly suggest mocking when possible in *integration* testing.
      * That way, you aren't spamming the NWS with API requests whenever your tests run.
-     * @throws DatasourceException
      */
     @Test
     public void testProvidenceWeatherCanLoad_REAL() throws DatasourceException {
@@ -39,11 +41,13 @@ public class TestWeatherSource {
 
         assertNotNull(res);
 
+        // For demo purposes
         System.out.println(res.temp_C());
 
-        // But this is _live data_! So we can't check the temperature is an exact value.
+        // This is _live data_! So we can't check the temperature is an exact value.
         // We should at least check the temperature is in a reasonable range. But be
-        // tolerant of variation...
+        // tolerant of variation... (Better would be to put these into a "validTemp" method.)
+
         // Absolute zero is −273.15 C
         assertTrue(res.temp_C() > -273.16);
         // Average surface temperature of Venus is around 460 C, IIRC

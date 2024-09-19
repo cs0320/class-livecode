@@ -21,8 +21,9 @@ public class CachingWeatherDatasource implements WeatherDatasource {
     public WeatherData getCurrentWeather(Geolocation loc) throws DatasourceException, IllegalArgumentException {
         throw new UnsupportedOperationException();
 
+        // TODO!
 
         // If this were implemented, we'd do something similar to the
-        // caching livecode from last time.
+        // caching livecode from last time. We'd proxy the original source, and manage its cache.
     }
 }

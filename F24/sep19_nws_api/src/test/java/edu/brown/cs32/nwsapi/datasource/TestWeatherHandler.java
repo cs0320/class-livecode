@@ -37,6 +37,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * In short, there are two new techniques demonstrated here:
  * writing tests that send fake API requests; and
  * testing with mock data / mock objects.
+ *
+ * Finally, notice that we are NOT "unit testing" the handler method by creating
+ * Request/Response objects. Instead, we are testing the entire flow from actual web
+ * message to actual web response. 
  */
 public class TestWeatherHandler {
 
@@ -49,7 +53,6 @@ public class TestWeatherHandler {
     }
 
     // Helping Moshi serialize Json responses; see the gearup for more info.
-    // NOTE WELL: THE TYPES GIVEN HERE WOULD VARY ANYTIME THE RESPONSE TYPE VARIES
     // We are testing an API that returns Map<String, Object>
     // It would be different if the response was, e.g., List<List<String>>.
     private final Type mapStringObject = Types.newParameterizedType(Map.class, String.class, Object.class);
@@ -168,7 +171,7 @@ public class TestWeatherHandler {
      */
     private void showDetailsIfError(Map<String, Object> body) {
         if(body.containsKey("type") && "error".equals(body.get("type"))) {
-            System.out.println(body.toString());
+            System.out.println(body);
         }
     }
 

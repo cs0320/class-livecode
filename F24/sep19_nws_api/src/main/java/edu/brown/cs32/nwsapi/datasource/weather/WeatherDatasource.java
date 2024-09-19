@@ -3,9 +3,9 @@ package edu.brown.cs32.nwsapi.datasource.weather;
 import edu.brown.cs32.nwsapi.datasource.DatasourceException;
 
 /**
- * A WeatherDatasource  can be used to get the current weather
- * at a certain location, which is provided to the source at
- * time of request.
+ * A WeatherDatasource can be used to get the current weather
+ * at a certain location. It is not specified _where_ the data comes from,
+ * how old it might be, etc.
  */
 public interface WeatherDatasource {
     /**
