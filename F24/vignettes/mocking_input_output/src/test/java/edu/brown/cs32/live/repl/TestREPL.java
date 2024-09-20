@@ -38,7 +38,7 @@ public class TestREPL {
      * Demonstration of a test of the command-line application using mocked input and output.
      */
     @Test
-    public void testREPLErrorOops() throws IOException {
+    public void testREPLMock() throws IOException {
         MockSystemIn mockIn = MockSystemIn.build();
         MockSystemOut mockOut = MockSystemOut.build();
         MockSystemOut mockErr = MockSystemOut.build();
@@ -70,5 +70,29 @@ public class TestREPL {
         String err1 = mockErr.terminal().readLine();
         assertEquals("ERROR: Invalid command.", err1);
 
+    }
+
+
+    /**
+     * Test to demo what happens if a _lot_ of text gets pushed into the buffer.
+     */
+    @Test
+    public void testREPLMockLarge() throws IOException {
+        // This example will freeze if we don't pass a higher buffer size.
+        // (I picked 65525 = 2^16 arbitrarily; the default is 1024 = 2^10 bytes.)
+        MockSystemIn mockIn = MockSystemIn.build(65525);
+        MockSystemOut mockOut = MockSystemOut.build(65525);
+        MockSystemOut mockErr = MockSystemOut.build(65525);
+        CommandProcessor proc = new CommandProcessor(mockIn.mockSystemIn(), mockOut.mockOutput(), mockErr.mockOutput());
+
+        // Suppose we had very verbose output. What happens? In a real application, the spam floods the terminal screen.
+        // Unfortunately, here, there is no outlet -- not until the application closes and we can start reading from the
+        // mock streams. Fortunately, we can instantiate the buffers to be arbitrarily large (see the helper classes).
+        for (int ii = 0; ii < 10000; ii++) {
+            mockIn.println("hi");
+        }
+
+        assertTrue(true);
+        // Has not frozen. (Would freeze with default buffer size.)
     }
 }

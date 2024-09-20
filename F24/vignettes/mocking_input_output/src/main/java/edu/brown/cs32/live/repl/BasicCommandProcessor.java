@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * This is the starting point for the demo only! The `CommandProcessor` class is an improvement on this one.
+ */
 public class BasicCommandProcessor {
     public void run() {
         // This is a "try with resources"; the resource will automatically
