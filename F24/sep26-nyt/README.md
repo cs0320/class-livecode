@@ -22,6 +22,10 @@ I've put each React component into its own file, often with a corresponding inte
         - `NewRound.tsx` (one of these for entering a new round)
           - `ControlledInput.tsx` (used so React can manage the state of the input box)
   
+### Packages
+
+* `npm outdated` will give you a table of requested version numbers vs. current version. 
+
 ## Notes on Playwright
 
 See [README.tests.md](./README.tests.md). The tests that I wrote for this example are all in [tests/app.spec.ts](./tests/app.spec.ts).
