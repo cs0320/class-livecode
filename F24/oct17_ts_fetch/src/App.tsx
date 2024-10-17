@@ -50,8 +50,8 @@ export function printGridInfo() {
   /* 
     Try #1
   */
-  // const fetched: Promise<Response> = fetch(url)
-  // console.log(fetched)
+  const fetched: Promise<Response> = fetch(url)
+  console.log(fetched)
 
   /* 
     Try #2
@@ -79,30 +79,30 @@ export function printGridInfo() {
   /* 
     Try #4
   */
-  fetch(url)
-     .then((response: Response) => response.json()) 
-     // This is no help, because of how `any` works in TS:
-     //.then((responseObject: NWSGridResponse) => {
-    .then((responseObject) => {
-        // Beware, **STILL**:
-        // The type system isn't giving us protection here---response.json()
-        // produces a Promise<any>, so TS is happy to trust the type declared
-        // or inferred. The type annotation on the input variable is no help. 
+  // fetch(url)
+  //    .then((response: Response) => response.json()) 
+  //    // This is no help, because of how `any` works in TS:
+  //    //.then((responseObject: NWSGridResponse) => {
+  //   .then((responseObject) => {
+  //       // Beware, **STILL**:
+  //       // The type system isn't giving us protection here---response.json()
+  //       // produces a Promise<any>, so TS is happy to trust the type declared
+  //       // or inferred. The type annotation on the input variable is no help. 
 
-        // Instead, check dynamically:          
-        if(!isNWSGridResponse(responseObject)) { 
-          console.log('not a response')
-          console.log(responseObject)
-        } else {
-          // Note: mouseover reports that `responseObject` here is 
-          // an NWSGridResponse. Narrowing has happened, via type predicate.
-          //  (Without the type predicate, this would still be `any`)
-          console.log(responseObject.properties.gridId)
-          console.log(responseObject.properties.gridX)
-          console.log(responseObject.properties.gridY)
-        }
-      })
-      .catch(problem => console.log(problem))
+  //       // Instead, check dynamically:          
+  //       if(!isNWSGridResponse(responseObject)) { 
+  //         console.log('not a response')
+  //         console.log(responseObject)
+  //       } else {
+  //         // Note: mouseover reports that `responseObject` here is 
+  //         // an NWSGridResponse. Narrowing has happened, via type predicate.
+  //         //  (Without the type predicate, this would still be `any`)
+  //         console.log(responseObject.properties.gridId)
+  //         console.log(responseObject.properties.gridX)
+  //         console.log(responseObject.properties.gridY)
+  //       }
+  //     })
+  //     .catch(problem => console.log(problem))
 
 }
 
