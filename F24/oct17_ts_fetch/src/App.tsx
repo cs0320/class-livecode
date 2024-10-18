@@ -11,6 +11,7 @@ function App() {
       <p>Click buttons to activate each demo, and see the console for output.</p>
       <button onClick={printGridInfo}>Print grid info</button>
       <button onClick={notThreadsDemo}>Not threads demo</button>
+      <button onClick={resolvePromiseDemo}>Promise resolution delay?</button>
     </>
   )
 }
@@ -144,11 +145,10 @@ function isNWSGridResponseProperties(rjson: any): rjson is NWSGridResponseProper
 */ 
 
 // Fibonacci without caching
-function slowComputationFib(n: number, label: string): number {
-  if(n % 2 === 0)  // reduce spam
-    console.log(`${label}: ${n}`)
+function slowComputationFib(n: number, label: string|undefined): number {
+  if(label) console.log(label)
   if(n <= 1) return 1
-  return slowComputationFib(n-1, label) + slowComputationFib(n-2, label)
+  return slowComputationFib(n-1, undefined) + slowComputationFib(n-2, undefined)
 }
 
 function notThreadsDemo() {
@@ -164,7 +164,7 @@ function notThreadsDemo() {
     // This performs the slow computation and then resolves 
     // the promise with the returned value. But the computation
     // is not delayed---so everything else waits until this finishes.
-    resolve(slowComputationFib(10, 'from inside promise and resolve'))
+    resolve(slowComputationFib(40, 'from inside promise and resolve'))
   })
   .then(value => {
     console.log(`promise resolved, in 'then' callback. value=${value}`)
@@ -195,7 +195,29 @@ function notThreadsDemo() {
 
 }
 
+/**
+ * Ok, but what about the resolution of a promise? Does the promise itself 
+ * need to wait before it's resolved? The demo above might make us think 
+ * "yes", but since the *browser itself* has multiple threads, it's worth
+ * experimenting a bit to make sure we really understand. 
+ */
+function resolvePromiseDemo() {
+  const lat: number = 39.7456
+  const lon: number = -97.0892
+  const url: string = 
+    `https://api.weather.gov/points/${lat},${lon}`
 
-function foo() {
-  console.log(' ' == 0)
+  const fetched: Promise<Response> = fetch(url)
+  // Instead of printing the promise immediately, do some work and then
+  // print it. Maybe that will cause enough delay for the network 
+  // request + response to go through in the meantime?
+  const timestamp = Date.now()
+  // Adjust the number lower if it's taking too long on your computer / browser.
+  slowComputationFib(42, `causing a delay (timestamp=${timestamp})...`)
+  console.log(`${Date.now()-timestamp} ms delay`)
+
+  // Notice that we can't really get at the data. There's no field for the result or status.
+  // But (at least in Safari/Firefox), the promise is still pending at this point, even seconds later.
+  console.log(fetched)
+
 }
