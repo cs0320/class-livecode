@@ -4,7 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { Outlet } from 'react-router'
 
-function App() {
+function ModifiedApp() {
   const [count, setCount] = useState(0)
 
   return (
@@ -17,10 +17,9 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <Outlet/>
-      <h1>Vite + React</h1>
+      <h1>Modified App!!!!!1111</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
+        <button onClick={() => setCount((count) => count + 5)}>
           count is {count}
         </button>
         <p>
@@ -30,8 +29,9 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <Outlet/>
     </>
   )
 }
 
-export default App
+export default ModifiedApp

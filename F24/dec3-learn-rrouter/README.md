@@ -14,7 +14,11 @@ I can't read docs in advance; I have to start from scratch. This is meant to be 
 
 I've created an initial React application in this folder. We'll build on it. 
 
-* Create the React TypeScript app with Vite: `npm create vite@latest my-vue-app -- --template vue`
+* Create the React TypeScript app with Vite: `npm create vite@latest app -- --template react-ts`
 * `cd app`, `npm install`, and `npm run dev` to run the starter app.
-* Note that the `README.md` file in the `app` directory is the auto-generated file produced by creating a new Vite project. 
+* Note that the `README.md` file in the `app` directory is the auto-generated file produced by creating a new Vite project.   
+
+## Notes while working 
+
+I could run this as either a library or a framework; going for library for now because it looks simpler, but there are supposed advantages of using it as a framework (TODO: add link)
 
