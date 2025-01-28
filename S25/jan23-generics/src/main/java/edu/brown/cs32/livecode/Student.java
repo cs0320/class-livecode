@@ -16,25 +16,28 @@ import java.util.Map;
  * @return the most common to-do item
  */
 
-public class Student {
-    List<String> todos;
+public class Student<T> {
+    List<T> todos;
 
-    public Student(List<String> todos) {
+    public Student(List<T> todos) {
         this.todos = todos;
     }
 
-    public String mostCommonTodoItem() {
-        Map<String, Integer> counts = new HashMap<>();
-        for(String s : this.todos) {
-            if(!counts.containsKey(s)) counts.put(s, 1);
-            else counts.put(s, counts.get(s) + 1);
+    public T mostCommonTodoItem() {
+        if(this.todos.isEmpty()) {
+            throw new IllegalStateException();
         }
-        String mostCommonItem = null;
+        Map<T, Integer> counts = new HashMap<>();
+        for(T item : this.todos) {
+            if(!counts.containsKey(item)) counts.put(item, 1);
+            else counts.put(item, counts.get(item) + 1);
+        }
+        T mostCommonItem = null;
         int howCommon = 0;
-        for(String s : counts.keySet()) {
-            if(counts.get(s) > howCommon) {
-                mostCommonItem = s;
-                howCommon = counts.get(s);
+        for(T item : counts.keySet()) {
+            if(counts.get(item) > howCommon) {
+                mostCommonItem = item;
+                howCommon = counts.get(item);
             }
         }
         return mostCommonItem;
