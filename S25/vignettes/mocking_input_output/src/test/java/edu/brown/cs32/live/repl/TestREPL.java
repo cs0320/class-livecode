@@ -1,12 +1,9 @@
 package edu.brown.cs32.live.repl;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -50,7 +47,7 @@ public class TestREPL {
             // Create a new application instance to test. (Ideally, we'd use a setUp method for this, but
             // this is more straightforward for this small example, given this needs to happen inside the
             // try-with-resources.)
-            CommandProcessor proc = new CommandProcessor(mockIn.mockSystemIn(), mockOut.mockOutput(), mockErr.mockOutput());
+            ImprovedCommandProcessor proc = new ImprovedCommandProcessor(mockIn.mockSystemIn(), mockOut.mockOutput(), mockErr.mockOutput());
 
             // Once we start the application, this test method will be unable to add anything else. So we must pre-populate
             // a fixed series of commands. Then run the application.
@@ -92,7 +89,7 @@ public class TestREPL {
              MockSystemOut mockOut = MockSystemOut.build(65525);
              MockSystemOut mockErr = MockSystemOut.build(65525)) {
 
-            CommandProcessor proc = new CommandProcessor(mockIn.mockSystemIn(), mockOut.mockOutput(), mockErr.mockOutput());
+            ImprovedCommandProcessor proc = new ImprovedCommandProcessor(mockIn.mockSystemIn(), mockOut.mockOutput(), mockErr.mockOutput());
 
             // Suppose we had very verbose output. What happens? In a real application, the spam floods the terminal screen.
             // Unfortunately, here, there is no outlet -- not until the application closes and we can start reading from the

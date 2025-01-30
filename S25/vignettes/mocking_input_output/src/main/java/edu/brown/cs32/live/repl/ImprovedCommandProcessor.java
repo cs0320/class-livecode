@@ -1,18 +1,12 @@
 package edu.brown.cs32.live.repl;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * An example class that implements a command prompt. When it is "run" (by calling its run method) it will
  * loop forever, listening for input. When it receives input, it parses it and executes the appropriate command.
  */
-public class CommandProcessor {
+public class ImprovedCommandProcessor {
     private final InputStream in;
     private final PrintStream out;
     private final PrintStream err;
@@ -23,7 +17,7 @@ public class CommandProcessor {
      * @param out the output stream to use
      * @param err the error stream to use
      */
-    public CommandProcessor(InputStream in, PrintStream out, PrintStream err) {
+    public ImprovedCommandProcessor(InputStream in, PrintStream out, PrintStream err) {
         this.in = in;
         this.out = out;
         this.err = err;
@@ -32,7 +26,7 @@ public class CommandProcessor {
     /**
      * Create a CommandProcessor using the standard System-defined input, output, and error streams.
      */
-    public CommandProcessor() {
+    public ImprovedCommandProcessor() {
         this(System.in, System.out, System.err);
     }
 
@@ -70,7 +64,7 @@ public class CommandProcessor {
      * This is the entry point for the command-line application.
      */
     public static void main(String[] args) {
-        CommandProcessor proc = new CommandProcessor();
+        ImprovedCommandProcessor proc = new ImprovedCommandProcessor();
         proc.run();
     }
 }

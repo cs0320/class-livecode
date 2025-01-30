@@ -5,7 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * This is the starting point for the demo only! The `CommandProcessor` class is an improvement on this one.
+ * This is the starting point for the demo only! The `ImprovedCommandProcessor` class is an improvement on this one,
+ * slightly refactored to allow us to dependency-inject input and output streams.
  */
 public class BasicCommandProcessor {
     public void run() {
