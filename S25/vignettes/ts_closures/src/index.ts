@@ -114,6 +114,11 @@ function example3() {
     for(var val of myList) {
         setTimeout( (() => {const ii2 = val; return () => console.log(ii2)})(), 100)
     }
+
+    // Note: the `var` vs. `let` distinction matters for the _loops_. But 
+    // we used `let` in the non-loop examples above and saw the closure 
+    // behavior. The difference is just about whether a "new" variable 
+    // is created; closures happen regardless.
 }
 example3()
 
