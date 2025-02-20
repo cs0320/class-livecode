@@ -12,7 +12,7 @@ export default function Puzzle() {
   // State: a list of lists of strings for the guessed numbers
   // (starts with the empty list, and is gradually updated)
   // ** Notice what happens if you leave out the <string[][]> **
-  const [guesses, setGuesses] = useState<string[][]>([]);
+  const [sequences, setSequences] = useState<string[][]>([]);
   // State: the current notification string, if any.
   const [notification, setNotif] = useState('');
 
@@ -27,30 +27,40 @@ export default function Puzzle() {
           don't need braces or explicit return statements if they don't need 
           multiple lines... Here, I now needed to add braces, and an explicit 
           return statement! */} 
-      { guesses.map( (guess,guessNumber) => {
+      { sequences.map( (sequence,sequenceNumber) => {
         // This will go to the JS console in the browser
-        console.log(`In the guesses.map; guessNumber=${guessNumber}`)
+        console.log(`In the sequences.map; guessNumber=${sequenceNumber}`)
         return (<OldRound           
-          guess={guess}
-          key={guessNumber} />)
+          seq={sequence}
+          key={sequenceNumber} />)
         })}
 
       {/* Add a single NewRound. Rather than passing in the full setter
           setGuesses, we'll instead pass a more restrictive function. 
           Notice that we're blurring ideas from strategy and proxy/adapter 
           here: we tell the component how to update the state, but that update
-          strategy is weaker than it normally would be. */} 
+          strategy is weaker than it normally would be. 
+          
+          The subcomponent can only *ADD* a new sequence, not delete any old ones. */} 
       <NewRound         
         setNotification={setNotif}
-        addGuess={(guess: string[]) => {
+
+        addSeq={(sequence: string[]) => {
           // Copy the guesses into a new object. If we don't change the 
           // object reference used, React will not re-render since the 
           // "value" of the "guesses" array will be the same reference.
-          const newGuesses: string[][] = guesses.slice(); 
+          const newSeqs: string[][] = sequences.slice(); 
           // Add the new guess to the new list
-          newGuesses.push(guess)
-          // Finally, call the setter with the new reference
-          setGuesses(newGuesses) }} />
+          newSeqs.push(sequence)
+          // Finally, call the setter with the new reference.
+          setSequences(newSeqs) 
+          // Note that the state will not be updated synchronously! 
+          // If we print out the state's current value, it will be the OLD list
+          console.log(`The React state won't be updated yet. Currently still: ${sequences}`)
+          // The current control flow needs to finish, and control returned to the browser,
+          // before the state updates can take effect. Since this is a callback function,
+          // that should happen once the callback function returns. But NOT BEFORE.
+          }} />
 
       {/* At the bottom, we'll sometimes display a status message.*/}
       {notification}   

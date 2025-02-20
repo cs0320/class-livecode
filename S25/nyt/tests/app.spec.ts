@@ -44,10 +44,13 @@ test('header text is visible on initial page', async ({ page }) => {
 
   // But sometimes that doesn't work well, or you can't add metadata reasonably. 
   // You can use a "test ID" field if accessibility metadata isn't suitable.
-  // Note React's strange prop name for this. We'd pass in the JSX: data-testid="test:header-text"
+  // NOTE WELL React's strange prop name for this.
+  // We'd pass in the JSX: data-testid="test:header-text"
   await expect(page.getByTestId('test:header-text')).toBeVisible()
 
-  // Last resort: use a locator to find by (say) class ID using a CSS selector:
+  // Last resort: use a locator to find by (say) class ID using a CSS selector. 
+  // But this really should be a last resort. If you write tests this way, you're 
+  // not making use of helpers that could make your testing experience better.
   await expect(page.locator('.App-header')).toBeVisible() // class = App-header
 });
 

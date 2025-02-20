@@ -30,22 +30,23 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
 
-  /* Configure projects for major browsers */
+  /* Configure the projects attribute to say which browsers you want to run the test suite on.
+     (For livecode expediency, I've only enabled this for Firefox.) */
   projects: [
-    {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
+    // {
+    //   name: 'chromium',
+    //   use: { ...devices['Desktop Chrome'] },
+    // },
 
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
     },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
 
     /* Test against mobile viewports. */
     // {
@@ -75,6 +76,9 @@ export default defineConfig({
 
      In practice, we'd build and run a preview of the production version, but for our purposes
      just using the dev server should be easier.
+
+     You can change the "8000" if that port is taken already, but you'll need to tell Vite 
+     to start on the same port as is used here. (See vite.config.js)
   */
   webServer: {
     command: 'npm start',

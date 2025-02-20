@@ -8,12 +8,12 @@ import { TEXT_number_1_accessible_name, TEXT_number_2_accessible_name, TEXT_numb
  * (This name doesn't have to be the same as in the actual functions.)
  */
 export interface NewRoundProps {
-    addGuess: (guess: string[]) => any,
+    addSeq: (seq_UNDER_WHATEVER_NAME_DOESNT_MATTER: string[]) => any,
     setNotification: Dispatch<SetStateAction<string>>
   }
 
   // You can also mix the interface (as type) with concrete field names, like this:
-export function NewRound({addGuess, setNotification}: NewRoundProps) {
+export function NewRound({addSeq, setNotification}: NewRoundProps) {
     // Remember: let React manage state in your webapp. The current guesses are string fields.
     // You don't always need the <...> annotation, but I like to include it for clarity.
     const [value0, setValue0] = useState<string>('');
@@ -37,7 +37,7 @@ export function NewRound({addGuess, setNotification}: NewRoundProps) {
         <div>
           <button onClick={() => {  
               if(!isNaN(parseInt(value0)) && !isNaN(parseInt(value1)) && !isNaN(parseInt(value2))) {
-                addGuess([value0,value1,value2])
+                addSeq([value0,value1,value2])
                 setValue0('')
                 setValue1('')
                 setValue2('')

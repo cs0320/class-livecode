@@ -20,6 +20,11 @@ function example1() {
 }
 example1()
 
+
+
+
+
+
 /* 
   We get "Nim". This is because the anonymous function kept a reference
   to the variable, and will reference it, even if that variable isn't 
