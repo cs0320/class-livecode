@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <title>Media Queries Example</title></head>
+    <!-- To keep this example self-contained, I've put the CSS in the HTML file. -->
+    <style>
+      /* Default layout */
+      .image-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
+      /* If the maximum viewport width is <= 375 pixels... */
+      @media (max-width: 375px) { 
+        .image-container { 
+        flex-direction: column;
+      } 
+    }
+    </style>
+  <body>
+    <div class="image-container">
+      <img src="./img/pumpkin.png" alt="drawing of a pumpkin" width=20%/>
+      <img src="./img/fire.png" alt="drawing of a fire" width=20%/>
+      <img src="./img/leaf.png" alt="drawing of a leaf" width=20%/>
+      <img src="./img/mushroom.png" alt="drawing of a mushroom" width=20%/>
+    </div>
+  </body>
+</html>
