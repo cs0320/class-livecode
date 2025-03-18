@@ -174,6 +174,11 @@ function nearest_neighbor(goal: Point, data: Point[]): Point | undefined {
 //   { x: 7, y: 2 }
 // ];
 // 
+
+
+//////////////////////////////////////////////////////////////////////////////
+
+
 // const goal: Point = { x: 6, y: 5 };
 // const nearest = nearest_neighbor(goal, points);
 // console.log(nearest); // Should output the closest point to (6, 5)
@@ -194,21 +199,68 @@ function rand_point_list(min: number, max: number, max_len: number): Point[] {
 
 // console.log(rand_point_list(-100, 100, 10))
 
+// In the interest of time (sorry...)
+let cGood = 0
+let cUndef = 0
+let cInput = 0
+let cNearest = 0
+
+
 function run_trial(count: number) { 
     const goal = rand_point(0, 5)
     const data = rand_point_list(0, 5, 100)
-    const expected = nearest_neighbor_reference(goal, data)
+    // What if we can't use a reference oracle?
+    //const expected = nearest_neighbor_reference(goal, data)
+
     const actual = nearest_neighbor(goal, data)
+  
     
-    if(expected != actual) {
-        console.log(`Failed on trial ${count}:`)
-        console.log(`goal: ${JSON.stringify(goal)}`)
-        console.log(`data: ${JSON.stringify(data)}`)
-        console.log(`expected: ${JSON.stringify(expected)}`)
-        console.log(`actual: ${JSON.stringify(actual)}`)
+    //if(expected != actual) {
+    const outcome = isValid(goal, data, actual)
+    if(outcome !== OUTCOME.Good) {
+      if(outcome === OUTCOME.Bad_Undefined) cUndef++
+      if(outcome === OUTCOME.Not_In_Input) cInput++
+      if(outcome === OUTCOME.Not_Nearest) cNearest++
+        //console.log(`Failed on trial ${count}:`)
+        //console.log(`goal: ${JSON.stringify(goal)}`)
+        //console.log(`data: ${JSON.stringify(data)}`)
+        //console.log(`expected: ${JSON.stringify(expected)}`)
+        //console.log(`actual: ${JSON.stringify(actual)}`)
+
+    } else {
+      cGood++
     }
+    // :-( we could define a custom type and pass one of these 
+    //return {good: cGood, input: cInput, undef: cUndef, nearest:cNearest}
 }
 
-for(let count=0;count<1000000;count++) {
+enum OUTCOME {
+  Good, 
+  Bad_Undefined, 
+  Not_In_Input,
+  Not_Nearest
+}
+
+function isValid(goal: Point, data: Point[], output: Point | undefined): OUTCOME {
+  if(output === undefined ) {
+    // The output is undefined if-and-only-if data is empty
+    if(data.length !== 0) return OUTCOME.Bad_Undefined
+  } else {
+    // Property: the output must be an element of the data
+    if(!data.includes(output)) return OUTCOME.Not_In_Input
+    // Property: distance from output is smallest across all data
+    for(const pt of data) {
+        // Use taxi distance
+        const dist = Math.abs(pt.x - goal.x) + Math.abs(pt.y - goal.y)
+        const output_dist = Math.abs(output.x - goal.x) + Math.abs(output.y - goal.y)
+        if(dist < output_dist) 
+            return OUTCOME.Not_Nearest
+    }
+  }
+  return OUTCOME.Good
+}
+
+for(let count=0;count<100000;count++) {
     run_trial(count)
 }
+console.log({good: cGood, input: cInput, undef: cUndef, nearest:cNearest})
