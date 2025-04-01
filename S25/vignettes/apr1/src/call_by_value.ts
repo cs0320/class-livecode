@@ -14,7 +14,7 @@ function halfOf(value: number): number {
     console.log(`halfOf called on ${value}`)
     return value / 2
 }
-printTwice(halfOf(100)) // 150
+printTwice(halfOf(100)) 
 /* We only see "halfOf called on 50" _once_, because the value 
    of halfOf(100) must be computed before printTwice can be called. */
 console.log('----------------------------------')
@@ -35,3 +35,24 @@ let x = 0
 incrementValue(x)
 console.log(x)
 /* What prints? */
+
+// (1) stop pretending to update; return the new value
+//   and let the caller decide what to do with it
+function incrementValue2(value: number): number {
+    return value++
+}
+
+
+function incrementValue3(value: {val: number}) {
+    value.val++
+}
+const y = {val: 0}
+incrementValue3(y)
+console.log(y.val)
+
+function incrementValue4() {    
+    x++
+}
+incrementValue4()
+console.log(x)
+

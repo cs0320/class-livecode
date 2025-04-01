@@ -41,6 +41,8 @@ function courseFinished(c: Course) {
   })}
 
 
+
+
   
 /////////////////////////////////////////////////////////////////////
 
@@ -65,3 +67,10 @@ const nimTelson2: Student = {
     studentName: "Nim Telson",
     concentration: "undeclared"
 }
+
+function makeCourseId(id: string): CourseId {
+  return id as CourseId
+}
+
+// This is NOT both! Mouseover to see.
+const test = makeCourseId(makeStudentId('123'))

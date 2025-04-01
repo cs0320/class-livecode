@@ -47,7 +47,7 @@ function registrarGiveCredit(studentId: string) {
  *  enrolled passed. Great! Let's give them credit. */
 function courseFinished(c: Course) {
   c.enrollment.forEach((s: Student) => {
-    console.log(`Congratulations ${s}.`)
+    console.log(`Congratulations ${s.studentName}.`)
     registrarGiveCredit(c.id)
   })}
 
