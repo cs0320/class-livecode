@@ -1,4 +1,6 @@
 import './App.css'
+import { ZodDemo } from './ZodDemo'
+
 
 /**
  * Using a starter Vite app as a platform for this demo. We won't be 
@@ -12,6 +14,8 @@ function App() {
       <button onClick={printGridInfo}>Print grid info</button>
       <button onClick={notThreadsDemo}>Not threads demo</button>
       <button onClick={resolvePromiseDemo}>Promise resolution delay?</button>
+      <hr/>
+      <ZodDemo/>
     </>
   )
 }
