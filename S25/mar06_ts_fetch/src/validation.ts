@@ -24,6 +24,24 @@ export const zNWSGridResponse = z.object({
     // that goal here, in validation. [[TODO: is this true? check the inferred interface.]]
     forecast: z.string().url({message: 'Forecast field was not a URL.'})
   })
-});
+})
 
+/** Zod will turn the schema we gave above into a TypeScript type, so we don't need 
+ *  to repeat the definition as an interface.
+*/
 export type NWSGridResponse = z.infer<typeof zNWSGridResponse>
+
+/*
+
+Can we combine Zod with "branded types" to get better type-level guarantees?
+That is, could we make a "brand" constructor that requires a Zod success before 
+it will make the corresponding "as" assertion? Probably!
+
+They even have support for this! 
+https://zod.dev/?id=brand
+So let's start by using that, and actually say what's happening *later on* in the class.
+
+*/
+
+export const zNWSGridResponseBranded = zNWSGridResponse.brand('NWSGridResponse')
+export type NWSGridResponseBranded = z.infer<typeof zNWSGridResponseBranded>
