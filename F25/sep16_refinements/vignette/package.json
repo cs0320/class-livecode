@@ -1,0 +1,21 @@
+{
+  "name": "02_lambdas_validation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "run": "npx ts-node ./src/run-parser.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.9.2",
+    "@types/node": "^24.3.1",
+    "@types/jest": "^30.0.0"
+  },
+  "dependencies": {
+    "zod": "^4.1.5"
+  }
+}
