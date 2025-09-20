@@ -43,7 +43,7 @@ for(const n of generator1) { // 4, ..., 10
     (2) Each time we call buildOneToTen(), it's a different call and so a different variable
         that's shared by all calls to the function it returns.
     
-    In FP terminology, we say that the inner function "closes" the non-local variable. This 
+    In FP terminology, we say that the inner function "closes over" the non-local variable. This 
     is why you might hear anonymous functions referred to as "closures".
 */
 
