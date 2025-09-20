@@ -34,6 +34,8 @@ for(const n of generator1) { // 4, ..., 10
     console.log(n)
 }
 
+console.log(`-------------------------------------`)
+
 /*
   Do we need TypeScript to do this for us, or is it something we could do ourselves? 
   Here's a version that we build ourselves. It's missing some features (like the yield 
@@ -61,9 +63,11 @@ const gen1 = buildOneToTen()
 const gen2 = buildOneToTen()
 
 console.log(gen1())
-console.log(gen2())
 console.log(gen1())
 console.log(gen2())
+console.log(gen2())
+
+console.log(`-------------------------------------`)
 
 /** That's a little restrictive, though. What if we wanted a generator that starts 
  *  and ends in a different place? We'd need to give some more arguments to the builder 
@@ -83,9 +87,10 @@ const gen3 = buildOneToTenCustom(5,6)
 const gen4 = buildOneToTenCustom(4, 10)
 
 console.log(gen3())
-console.log(gen4())
 console.log(gen3())
 console.log(gen4())
+console.log(gen4())
+console.log(`-------------------------------------`)
 
 /** Think about what you know of OO in Java. Objects have constructors, and often have 
  *  internal state. There's a strong parallel between creating objects in Java and what 
