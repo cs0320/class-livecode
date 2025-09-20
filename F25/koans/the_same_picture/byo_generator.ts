@@ -43,8 +43,8 @@ for(const n of generator1) { // 4, ..., 10
     (2) Each time we call buildOneToTen(), it's a different call and so a different variable
         that's shared by all calls to the function it returns.
     
-    In FP terminology, we say that the inner function "closes over" the non-local variable. This 
-    is why you might hear anonymous functions referred to as "closures".
+    In FP terminology, we say that the inner function "closes over" the non-local variable. 
+    This is why you might hear anonymous functions referred to as "closures".
 */
 
 function buildOneToTen() {
@@ -87,21 +87,25 @@ console.log(gen4())
 console.log(gen3())
 console.log(gen4())
 
-/** Think about what you know of OO in Java. Objects have constructors, and often have internal state. 
- *  There's a strong parallel between creating objects in Java and what we're doing here with functions. 
+/** Think about what you know of OO in Java. Objects have constructors, and often have 
+ *  internal state. There's a strong parallel between creating objects in Java and what 
+ *  we're doing here with functions. 
  * 
- *  TypeScript _does_ have a class system, but we're not using it for now to avoid confusion when 
- *  we get to front-end programming with React. Ordinary TypeScript "objects" are just key-value 
- *  stores like HashMaps: dictionaries like {x: 100, y: 200} and so on.
+ *  TypeScript _does_ have a class system, but we're not using it for now to avoid 
+ *  confusion when we get to front-end programming with React. Ordinary TypeScript 
+ *  "objects" are just key-value stores like HashMaps: dictionaries like 
+ *  {x: 100, y: 200} and so on.
  * 
- *  Could we re-invent OO-style objects if we only had functions and dictionaries to work with? Well...
- *  If you took 0200, you might remember building a functional linked-list class. */
+ *  Could we re-invent OO-style objects if we only had functions and dictionaries 
+ *  to work with? Well... If you took 0200, you might remember building a functional
+ *  linked-list class. */
 
-/** Empty lists. We could have used "undefined" instead of making our own type, but I wanted to 
-  * hint at how branded types could be built internally in Zod. This symbol will always be different
-  * from others, and always have its own unique type (which we use below).
+/** Empty lists. We could have used "undefined" instead of making our own type, but 
+  * I wanted to hint at how branded types could be built internally in Zod. This symbol
+  * will always be different from others, and always have its own unique type (which 
+  * we use below).
   * 
-  * For more information, see: https://www.typescriptlang.org/docs/handbook/symbols.html */
+  * For more information:  https://www.typescriptlang.org/docs/handbook/symbols.html */
 const EmptyList: unique symbol = Symbol();
 
 /** Methods provided by a list node. */
@@ -116,7 +120,7 @@ function newListNode<T>(value: T, next: ListNode<T> | typeof EmptyList) {
     let internalNext = next   // Internal, "private" field
     const getValue = () => internalValue // Defining a getter "method"
     const getNext = () => internalNext   // Defining a getter "method"
-    return {getValue: getValue, getNext: getNext} // Returning all "methods" in a dictionary.
+    return {getValue: getValue, getNext: getNext} // Dictionary of "methods" 
 }
 
 /** A "constructor" for the wrapper class */
@@ -129,7 +133,8 @@ function newLinkedList<T>() {
         start = newNode
     }
 
-    const getHelper = (idx: number, place: (ListNode<T> | typeof EmptyList)): (T | undefined) => {
+    const getHelper = (idx: number, place: (ListNode<T> | typeof EmptyList)): 
+      (T | undefined) => {
         if(place == EmptyList) return undefined
         if(idx <= 0) return place.getValue()
         return getHelper(idx-1, place.getNext())
@@ -151,15 +156,16 @@ console.log(ll.get(1)) // 200
 console.log(ll.get(2)) // 100
 console.log(ll.get(3)) // undefined
 
-/** We can use functions alone to build the sort of programming constructs that classes provide! 
+/** We can use functions alone to build the sort of programming constructs that
+ *  classes provide! 
  * 
- *  Language runtimes do a lot of optimization work that we haven't, however. So in practice, 
- *  we'd use TypeScript's class system if we really needed OOP.
+ *  Language runtimes do a lot of optimization work that we haven't, however. So
+ *   in practice, we'd use TypeScript's class system if we really needed OOP.
  * 
- *  Every semester, I say that taking Programming Languages (CSCI 1730) will help you level up
- *  as an engineer. This is an example of why, although it might seem like a silly example at 
- *  first. Understanding different essential shapes of computation, rather than only specific 
- *  language features, is powerful. Understanding gives you the ability to improvise, explore, 
- *  and debug in new settings. 
+ *  Every semester, I say that taking Programming Languages (CSCI 1730) will help you
+ *  level up as an engineer. This is an example of why, although it might seem like a 
+ *  silly example at first. Understanding different essential shapes of computation, 
+ *  rather than only specific language features, is powerful. Understanding gives you
+ *  the ability to improvise, explore, and debug in new settings. 
  */
 
