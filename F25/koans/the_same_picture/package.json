@@ -1,0 +1,18 @@
+{
+  "name": "cs32-f25-koan-1",
+  "version": "1.0.0",
+  "scripts": {
+    "run": "npx ts-node ./byo_generator.ts"
+  },
+  "keywords": [],
+  "author": "Tim Nelson",
+  "license": "ISC",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.0.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
