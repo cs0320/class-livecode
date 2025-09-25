@@ -2,7 +2,8 @@
   "name": "cs32-f25-koan-2",
   "version": "1.0.0",
   "scripts": {
-    "run": "npx ts-node ./mocks.ts"
+    "run": "npx ts-node ./src/mocks.ts",
+    "test": "npx ts-node ./src/mocks.ts"
   },
   "keywords": [],
   "author": "Tim Nelson",
@@ -12,5 +13,8 @@
     "@types/node": "^24.0.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "zod": "^4.1.11"
   }
 }
