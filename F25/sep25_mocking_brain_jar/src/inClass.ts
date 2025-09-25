@@ -51,7 +51,7 @@ async function getRealTemperature(lat: number, lon: number): Promise<Temperature
 }
 
 /** Let's do something with that temperature! */
-async function weatherReportProvidence() {
+export async function weatherReportProvidence() {
     const report = await getRealTemperature(providence_lat, providence_lon)
-    console.log(`It's ${report.degrees} ${report.scale} out!`)
+    console.log(`It's ${report.degrees} ${report.scale} out in Providence!`)
 }
