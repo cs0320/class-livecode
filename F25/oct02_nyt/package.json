@@ -1,0 +1,30 @@
+{
+  "name": "react-nyt",
+  "version": "0.25.2",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@types/node": "^22.7.2",
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.6.2"
+  },
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "eslint": "^9.11.1",
+    "vite": "^5.4.8"
+  }
+}
