@@ -1,7 +1,8 @@
 .DS_store
-**/.idea/
-**/target/*
-**/*.iml
-**/test-results/*
-**/playwright-report/*
-**/node_modules/*
+.idea
+target
+*.iml
+test-results
+playwright-report
+node_modules
+dist
