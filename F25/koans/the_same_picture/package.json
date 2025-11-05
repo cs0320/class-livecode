@@ -2,7 +2,7 @@
   "name": "cs32-f25-koan-1",
   "version": "1.0.0",
   "scripts": {
-    "run": "npx ts-node ./byo_generator.ts"
+    "run": "npx ts-node ./inclass.ts"
   },
   "keywords": [],
   "author": "Tim Nelson",

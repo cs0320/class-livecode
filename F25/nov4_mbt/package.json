@@ -1,0 +1,21 @@
+{
+  "name": "mar13_pbt_llm",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "run": "npx ts-node src/index.ts",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^22.13.10",
+    "jest": "^30.2.0",
+    "ts-jest": "^29.4.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  }
+}
