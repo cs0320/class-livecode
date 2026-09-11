@@ -1,0 +1,15 @@
+{
+  "name": "gridworld",
+  "version": "1.0.0",
+  "description": "2d gridworld for 0320",
+  "type": "module",
+  "scripts": {
+    "start": "tsx src/demo.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.2",
+    "tsx": "^4.23.13",
+    "typescript": "^5.9.3"
+  }
+}
