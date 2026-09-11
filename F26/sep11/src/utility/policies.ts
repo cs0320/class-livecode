@@ -11,3 +11,7 @@ export const randomWalk: Policy = (world) => {
   if (options.length === 0) return undefined; // we're stuck!
   return options[Math.floor(Math.random() * options.length)];
 };
+
+export const sleeping: Policy = (world) => {
+  return undefined
+};

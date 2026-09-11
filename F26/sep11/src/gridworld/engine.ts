@@ -43,19 +43,19 @@ export type RunOptions = {
  *  @param policy the function saying what the robot should do at every state
  *  @param options configuration options like how to print
 */
-export function run(
-  start: World,
-  policy: Policy,
-  options: RunOptions,
-): World {
-  const { maxSteps, onStep } = options; 
+export function run(start: World, policy: Policy, options: RunOptions): World {
+  //const { maxSteps, onStep } = options;  // equiv to below
+  const maxSteps = options.maxSteps
+  const onStep = options.onStep
   
   let world = start;
   for (let count = 1; count <= maxSteps; count++) {
     const move = policy(world);           // what to do next?
     if (move === undefined) return world; // nothing changed
     world = step(world, move);            // update the world
-    onStep?.(world, move, count);         // let the caller print etc.
+    //onStep?.(world, move, count);         // let the caller print etc.
+    if(onStep !== undefined)
+      onStep(world, move, count)
   }
 
   return world; // return the final world state
