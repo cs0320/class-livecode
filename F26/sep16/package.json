@@ -1,0 +1,22 @@
+{
+  "name": "sep16",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx src/inclass.ts",
+    "build": "tsc",
+    "repl": "npm run build && node -i -e \"import('./dist/inclass.js').then(inclass => Object.assign(globalThis, inclass))\"",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.3",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.0",
+    "vitest": "^5.0.1"
+  },
+  "dependencies": {
+    "zod": "^4.6.5"
+  }
+}
