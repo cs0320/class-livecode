@@ -1,21 +1,27 @@
 {
-  "name": "sep16",
+  "name": "gridworld",
   "version": "1.0.0",
-  "private": true,
+  "description": "2d gridworld for 0320",
   "type": "module",
   "scripts": {
-    "start": "tsx src/inclass.ts",
-    "build": "tsc",
-    "repl": "npm run build && node -i -e \"import('./dist/inclass.js').then(inclass => Object.assign(globalThis, inclass))\"",
-    "test": "vitest"
+    "start": "tsx src/demo.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "server": "npx tsx server/server.ts",
+    "sep18": "tsx src/utility/fetch.ts"
   },
   "devDependencies": {
-    "@types/node": "^22.20.3",
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.20.2",
+    "@types/readline-sync": "^1.4.8",
+    "fast-check": "^4.10.0",
     "tsx": "^4.23.13",
-    "typescript": "^7.0.2",
-    "vite": "^8.3.0",
-    "vitest": "^5.0.1"
+    "typescript": "^5.9.3",
+    "vitest": "^5.0.0"
   },
-  "dependencies": {    
+  "dependencies": {
+    "express": "^5.2.1",
+    "readline-sync": "^1.4.10",
+    "zod": "^4.6.5"
   }
 }
