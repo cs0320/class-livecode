@@ -57,18 +57,27 @@ const what: Promise<number> = example()
 // Exercise
 /////////////////
 
+// TASK: make a Zod schema for "array of 3-tuples of [string, string that can be turned into a number, email address]"
+// A tuple is a fixed-length array. Use z.tuple([...])
+// For "can be turned into", see docs at: https://zod.dev/
+
+
+
+
 /**
- * 
- * @returns 
+ * A "mock" function that returns a dataset, as if just parsed from CSV. 
+ * You don't need to change this for the exercise.
+ * @returns a constant dataset
  */
 function mockCSV(): string[][] | undefined {
   return [["Tim Nelson", "20", "tim_nelson@brown.edu"], ["Nim Telson", "NOT A NUMBER", "NOT AN EMAIL"]]
 }
 
 async function exercise() {
+    // TASK: mouse over; what's the type? Why do you think that is?
     const data = mockCSV()
-    // TASK: make a Zod schema for "array of 3-tuples of [string, string that can be turned into a number, email address]"
-    // A tuple is a fixed-length array. Use z.tuple([...])
-    // For "can be turned into", see docs at: https://zod.dev/
-    // 
+
+    // TASK: parse mockCSV's response with your schema's safeParse, and examine what it returns.
+    // Print out the data.
+
 }
