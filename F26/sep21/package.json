@@ -8,7 +8,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "server": "npx tsx server/server.ts",
-    "sep18": "tsx src/utility/fetch.ts"
+    "inclass": "tsx src/utility/fetch.ts"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",

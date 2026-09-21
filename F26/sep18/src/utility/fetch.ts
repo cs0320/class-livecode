@@ -35,17 +35,40 @@ const schema = z.object({
     })
 
 async function example() {
-    const response: Promise<Response> = fetch('http://localhost:3232')
+    //const response: Promise<Response> = fetch('http://localhost:3232')
     const response2: Response = await fetch('http://localhost:3232')
+    // At this point, data has type "any"
     const data = await response2.json()
-    //console.log(data)
-    const huh = schema.safeParse(data)
-    if(huh.success) {
-        const huh2 = huh.data
-        const theGrid: Grid = huh.data.grid
+    // Beware! Don't make data mutable and say data = schema.safeParse... 
+    // Instead, create a new identifier:
+    const validated = schema.safeParse(data)
+    if(validated.success) {
+        // Narrowing has happened: TypeScript infers that the data is there. (How? Click through...)
+        const theGrid: Grid = data.grid
+        return data
     }
-    console.log(huh)
-    return data
 }
 // type system is fine with this, because any works for number! 
 const what: Promise<number> = example()
+
+
+
+/////////////////
+// Exercise
+/////////////////
+
+/**
+ * 
+ * @returns 
+ */
+function mockCSV(): string[][] | undefined {
+  return [["Tim Nelson", "20", "tim_nelson@brown.edu"], ["Nim Telson", "NOT A NUMBER", "NOT AN EMAIL"]]
+}
+
+async function exercise() {
+    const data = mockCSV()
+    // TASK: make a Zod schema for "array of 3-tuples of [string, string that can be turned into a number, email address]"
+    // A tuple is a fixed-length array. Use z.tuple([...])
+    // For "can be turned into", see docs at: https://zod.dev/
+    // 
+}
