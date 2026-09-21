@@ -1,0 +1,27 @@
+{
+  "name": "gridworld",
+  "version": "1.0.0",
+  "description": "2d gridworld for 0320",
+  "type": "module",
+  "scripts": {
+    "start": "tsx src/demo.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "server": "npx tsx server/server.ts",
+    "sep18": "tsx src/utility/fetch.ts"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.20.2",
+    "@types/readline-sync": "^1.4.8",
+    "fast-check": "^4.10.0",
+    "tsx": "^4.23.13",
+    "typescript": "^5.9.3",
+    "vitest": "^5.0.0"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "readline-sync": "^1.4.10",
+    "zod": "^4.6.5"
+  }
+}
