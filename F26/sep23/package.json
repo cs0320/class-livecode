@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "exercise": "tsc && node -i -e \"require('./dist/main.js')\"",
+    "exercise": "tsc && node -i -e \"require('./dist/main.js')\""
   },
   "keywords": [],
   "author": "",
