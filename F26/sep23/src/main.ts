@@ -1,6 +1,13 @@
 
 /**
  * Demo
+ * 
+ * Please follow along! **NOTE**: if you want to exit the REPL, do any of
+ *   ctrl-D
+ *   ctrl-C twice
+ *   .exit
+ * 
+ * 
  * Return a function that can be repeatedly called to get gradually-increasing
  * numbers. Specifically, each call yields 1 more than the last. 
  * 
