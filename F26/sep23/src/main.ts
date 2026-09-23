@@ -9,8 +9,8 @@
  * 
  * @param start First value to yield.
  */
-function newNumberGenerator(start: number) {
-    
+export function newNumberGenerator(start: number) {
+
 }
 
 /**
@@ -24,7 +24,7 @@ function newNumberGenerator(start: number) {
  * like what you've seen in Java: "T" is whatever type values in the list have.
  */
 
-interface LinkedList<T> {
+export interface LinkedList<T> {
 
 }
 
@@ -32,6 +32,6 @@ interface LinkedList<T> {
  * Step 2: How do we implement the "class"?
  */
 
-function newList<T>() {
+export function newList<T>() {
 
 }
