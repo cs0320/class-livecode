@@ -57,12 +57,19 @@ const what: Promise<number> = example()
 // Exercise
 /////////////////
 
-// TASK: make a Zod schema for "array of 3-tuples of [string, string that can be turned into a number, email address]"
+// TASK: make a Zod schema for "array of 3-tuples of 
+// [string, string that can be turned into a number, email address]"
 // A tuple is a fixed-length array. Use z.tuple([...])
 // For "can be turned into", see docs at: https://zod.dev/
 
+const registrarSchema = z.array(z.tuple([z.string(), z.coerce.number(), z.email()]))
 
+type intermediates = "0320" | "0300" | "0330" | "0220" // ...
+type registrarData = z.infer<typeof registrarSchema>
 
+// Java: List<Integer> <-- angle brackets = generic type parameter
+// Angle brackets really mean: invoke a type constructor. it's not 
+// a function, it's not a method! It's a operator on types.
 
 /**
  * A "mock" function that returns a dataset, as if just parsed from CSV. 
@@ -70,8 +77,10 @@ const what: Promise<number> = example()
  * @returns a constant dataset
  */
 function mockCSV(): string[][] | undefined {
-  return [["Tim Nelson", "20", "tim_nelson@brown.edu"], ["Nim Telson", "NOT A NUMBER", "NOT AN EMAIL"]]
+  return [["Tim Nelson", "20", "tim_nelson@brown.edu"], 
+          ["Nim Telson", "NOT A NUMBER", "NOT AN EMAIL"]]
 }
+// [ [ String, String-that's-a-number, email] ...]
 
 async function exercise() {
     // TASK: mouse over; what's the type? Why do you think that is?
@@ -79,5 +88,10 @@ async function exercise() {
 
     // TASK: parse mockCSV's response with your schema's safeParse, and examine what it returns.
     // Print out the data.
+    const results = registrarSchema.safeParse(mockCSV())
+    if(results.success) {
+        results.data
+    }
+
 
 }
