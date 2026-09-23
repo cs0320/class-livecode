@@ -16,8 +16,19 @@
  * 
  * @param start First value to yield.
  */
-export function newNumberGenerator(start: number): () => number {
-       
+export function newNumberGenerator_(start: number): () => number {
+    // () => number   <--- functions of no arguments that return number
+    let next = start // we don't TECHNICALLY need this
+    // could also return () => { ... s}
+    return function() { // "closes over start/next"
+        // let result = start
+        // start = start + 1
+        // return result
+        let result = next
+        next++
+        return result
+    }
+    
 }
 
 /**
@@ -31,14 +42,21 @@ export function newNumberGenerator(start: number): () => number {
  * like what you've seen in Java: "T" is whatever type values in the list have.
  */
 
-export interface LinkedList<T> {
-
+export interface LinkedList_<T> {
+    addFirst: (x: T) => void // Sadly, you need the name (that is never used again)
+    getFirst: () => T 
+    getRest: () => LinkedList_<T>
 }
 
 /**
  * Step 2: How do we implement the "class"?
  */
 
-export function newList<T>(): LinkedList<T> {
-    return () => {} // placeholder to avoid type errors
+export function newList_<T>(): LinkedList_<T> { // "implements the LinkedList<T> interface"
+    let first = undefined;
+    return {
+        addFirst: (x: T) => {},
+        getFirst: () => {if(first !=== undefined) return first },
+        getRest: () => {}
+    } 
 }
