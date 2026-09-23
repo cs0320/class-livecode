@@ -9,8 +9,8 @@
  * 
  * @param start First value to yield.
  */
-export function newNumberGenerator(start: number) {
-
+export function newNumberGenerator(start: number): () => number {
+    
 }
 
 /**
@@ -32,6 +32,6 @@ export interface LinkedList<T> {
  * Step 2: How do we implement the "class"?
  */
 
-export function newList<T>() {
-
+export function newList<T>(): LinkedList<T> {
+    return () => {} // placeholder to avoid type errors
 }
