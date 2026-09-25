@@ -1,0 +1,5 @@
+:root { font-family: system-ui, sans-serif; color-scheme: light dark; }
+main { text-align: center; }
+.reading { font-size: 32px; }
+.heater.on { color: orangered; }
+.controls button { margin: 0 12px; }
