@@ -5,9 +5,9 @@ import App from './App.tsx'
 import { makeConstantThermometer, makeOscillatingThermometer } from './thermometers.ts'
 
 /********* SWAP HERE TO CONTROL THERMOMETER INPUT **********/
-const t = makeConstantThermometer(65)
+//const t = makeConstantThermometer(65)
 // Swap when you have an oscillating thermometer implementation.
-//const t = makeOscillatingThermometer(62, 72, 55)
+const t = makeOscillatingThermometer(62, 72, 55)
 /***********************************************************/
 
 const rootElement = document.getElementById('root')

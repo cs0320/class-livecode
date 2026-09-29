@@ -31,5 +31,15 @@ export function makeOscillatingThermometer(
   startTemp: number, max: number, min: number): Thermometer {
   
     /********* FILL IN HERE, replacing the () => 0 **********/
-    return () => 0
+
+    let goingUp = true
+    let temp = startTemp
+
+    return () => {
+      if(goingUp && temp < max) { temp++ }
+      else if (!goingUp && temp > min) { temp-- }
+      else if(goingUp) { goingUp = false}
+      else { goingUp = true}
+      return temp
+    }
 }
