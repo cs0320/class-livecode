@@ -16,9 +16,9 @@ export function OldRound( {seq}: {seq: string[]}) {
       <div className={"guess-round-"+result}
            aria-label={label}>
         {label_symbol}
-        <input value={seq[0]} readOnly/>
-        <input value={seq[1]} readOnly/>
-        <input value={seq[2]} readOnly/>
+        <input value={seq[0]} readOnly aria-label="first number in past guess" />
+        <input value={seq[1]} readOnly aria-label="second number in past guess" />
+        <input value={seq[2]} readOnly aria-label="third number in past guess" />
       </div>
     );  
   }
